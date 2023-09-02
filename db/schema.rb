@@ -1,0 +1,84 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_213009) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "mucho_amigos", force: :cascade do |t|
+    t.string "full_name", limit: 128
+    t.string "email", limit: 64
+    t.string "phone", limit: 20
+    t.string "address", limit: 256
+    t.string "street_number", limit: 16
+    t.string "street_name", limit: 64
+    t.string "street_suffix", limit: 16
+    t.string "city", limit: 64
+    t.string "state_abbreviation", limit: 2
+    t.string "postal_code", limit: 5
+    t.string "country_code", limit: 4
+    t.decimal "latitude", precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
+    t.boolean "party_animal"
+    t.text "personal_bio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mucho_guests", force: :cascade do |t|
+    t.bigint "amigo_id", null: false
+    t.bigint "party_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amigo_id", "party_id"], name: "index_mucho_guests_on_amigo_id_and_party_id", unique: true
+    t.index ["amigo_id"], name: "index_mucho_guests_on_amigo_id"
+    t.index ["party_id"], name: "index_mucho_guests_on_party_id"
+  end
+
+  create_table "mucho_locations", force: :cascade do |t|
+    t.string "location_name"
+    t.text "location_description"
+    t.string "location_phone"
+    t.string "location_email"
+    t.string "location_website_url"
+    t.string "location_address"
+    t.string "location_street_number"
+    t.string "location_street_name"
+    t.string "location_street_suffix"
+    t.string "location_city"
+    t.string "location_state_abbreviation"
+    t.string "location_postal_code"
+    t.string "location_country_code"
+    t.string "location_latitude"
+    t.string "location_longitude"
+    t.boolean "location_available"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mucho_parties", force: :cascade do |t|
+    t.string "party_name"
+    t.date "party_date"
+    t.timestamptz "party_time"
+    t.bigint "party_host_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "mucho_location_id"
+    t.index ["mucho_location_id"], name: "index_mucho_parties_on_mucho_location_id"
+    t.index ["party_host_id"], name: "index_mucho_parties_on_party_host_id"
+  end
+
+  add_foreign_key "mucho_guests", "mucho_amigos", column: "amigo_id"
+  add_foreign_key "mucho_guests", "mucho_parties", column: "party_id"
+  add_foreign_key "mucho_parties", "mucho_amigos", column: "party_host_id"
+  add_foreign_key "mucho_parties", "mucho_locations"
+end

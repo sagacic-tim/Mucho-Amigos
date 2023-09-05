@@ -246,56 +246,56 @@ MuchoParty.create!(
   party_name: "Railing at Native Fields About Coding",
   party_date: "2023-10-17",
   party_time: "2023-10-17T04:00:00.000-07:00",
-  party_host: party_host_1,
-  party_location_id: location_1
+  party_location_id: location_1.id,
+  party_host_id: party_host_1.id
 )
 
 MuchoParty.create!(
   party_name: "Coding at Home Restaurant Till Dawn",
   party_date: "2023-11-04",
   party_time: "2023-11-04T17:30:00.080-07:00",
-  party_host: party_host_2,
-  party_location_id: location_2
+  party_location_id: location_2.id,
+  party_host_id: party_host_2.id
 )
 
 MuchoParty.create!(
   party_name: "Cathcing Rails in Knarly Surf at Paradise Cove",
   party_date: "2023-09-15",
   party_time: "2023-09-15T10:00:00.000-07:00",
-  party_host: party_host_3,
-  party_location_id: location_3
+  party_location_id: location_3.id,
+  party_host_id: party_host_3.id,
 )
 
 MuchoParty.create!(
   party_name: "A Ruby of a Party at Gladstone's",
   party_date: "2023-10-01",
   party_time: "2023-10-01T03:30:00.000-07:00",
-  party_host: party_host_4,
-  party_location_id: location_5
+  party_location_id: location_5.id,
+  party_host_id: party_host_4.id
 )
 
 MuchoParty.create!(
   party_name: "Coding at Cafe Beaujolais Till Dawn",
   party_date: "2023-09-30",
   party_time: "2023-09-30T02:30:00.000-07:00",
-  party_host: party_host_5,
-  party_location_id: location_6
+  party_location_id: location_6.id,
+  party_host_id: party_host_5.id
 )
 
 MuchoParty.create!(
   party_name: "Hitting the Deck with Awesome Code",
   party_date: "2023-11-27",
   party_time: "2023-11-27T01:00:00.000-07:00",
-  party_host: party_host_6,
-  party_location_id: location_7
+  party_location_id: location_7.id,
+  party_host_id: party_host_6.id,
 )
 
 MuchoParty.create!(
   party_name: "Compiling with The Tree People",
   party_date: "2023-12-31",
   party_time: "2023-12-31T04:59:59.999-07:00",
-  party_host:party_host_1,
-  party_location_id: location_4
+  party_location_id: location_4.id,
+  party_host_id: party_host_1.id
 )
 
 puts "#{MuchoAmigo.count} amigos created"

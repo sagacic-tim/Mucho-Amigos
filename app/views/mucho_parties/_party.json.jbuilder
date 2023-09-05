@@ -3,4 +3,5 @@ json.extract! party,
 :party_name,
 :party_date,
 :party_time,
-:party_host
+:party_host_id,
+:party_location_id

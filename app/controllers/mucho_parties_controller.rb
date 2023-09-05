@@ -1,11 +1,15 @@
 class MuchoPartiesController < ApplicationController
+  before_action :set_mucho_party, only: [:show, :create, :update, :destroy]
+
   def index
     @mucho_parties = MuchoParty.all
+    puts "@mucho_parties: #{@mucho_parties.inspect}"
     render :index
   end
 
   def show
-    @mucho_party = MuchoParty.find(params[:id])
+    # debugger
+    # @mucho_party = MuchoParty.find(params[:id])
     render :show
   end
 
@@ -43,7 +47,8 @@ class MuchoPartiesController < ApplicationController
       :party_name,
       :party_date,
       :party_time,
-      :party_host_id
+      :party_host_id,
+      :party_location_id
     )
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_31_213009) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_30_205459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,8 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_213009) do
     t.string "location_state_abbreviation"
     t.string "location_postal_code"
     t.string "location_country_code"
-    t.string "location_latitude"
-    t.string "location_longitude"
+    t.decimal "location_latitude", precision: 9, scale: 6
+    t.decimal "location_longitude", precision: 9, scale: 6
     t.boolean "location_available"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,15 +70,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_213009) do
     t.date "party_date"
     t.timestamptz "party_time"
     t.bigint "party_host_id", null: false
+    t.bigint "party_location_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "mucho_location_id"
-    t.index ["mucho_location_id"], name: "index_mucho_parties_on_mucho_location_id"
     t.index ["party_host_id"], name: "index_mucho_parties_on_party_host_id"
+    t.index ["party_location_id"], name: "index_mucho_parties_on_party_location_id"
   end
 
   add_foreign_key "mucho_guests", "mucho_amigos", column: "amigo_id"
   add_foreign_key "mucho_guests", "mucho_parties", column: "party_id"
   add_foreign_key "mucho_parties", "mucho_amigos", column: "party_host_id"
-  add_foreign_key "mucho_parties", "mucho_locations"
+  add_foreign_key "mucho_parties", "mucho_locations", column: "party_location_id"
 end

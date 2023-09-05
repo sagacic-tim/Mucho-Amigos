@@ -4,16 +4,18 @@ class MuchoParty < ApplicationRecord
   has_many :mucho_amigos, through: :mucho_guests
 
   # If MuchoParty is also related to MuchoAmigo as the 'host'
-  belongs_to :party_host, class_name: 'MuchoAmigo', optional: true
+  belongs_to :party_host, class_name: 'MuchoAmigo', optional: false
 
   # Parties are related to location via MuchoLocations
-  belongs_to :mucho_location, optional: true
+  belongs_to :mucho_location, class_name: 'MuchoLocation', optional: false  # Corrected typo in class_name
 
   # Ensure no duplicate party names at the same date and time
   validates :party_name, uniqueness: { 
     scope: [:party_date, :party_time], 
     message: "cannot have duplicate party names at the same date and time" 
   }, unless: :skip_uniqueness_validation?
+
+  # More validations can go here...
 
   private
 
@@ -22,7 +24,6 @@ class MuchoParty < ApplicationRecord
   end
 
   def date_and_time_valid?
-    # check to make sure that valid date and time strings are provided
     begin
       Date.parse(party_date.to_s)
       Time.parse(party_time.to_s)

@@ -1,6 +1,7 @@
 class MuchoLocation < ApplicationRecord
-  # Each locaiton can host many parties
-  has_many :mucho_parties
+  # Each location can host many parties
+  has_many :mucho_parties, dependent: :destroy
+
 
   validates :location_name, uniqueness: { 
     scope: [:location_street_number, :location_street_name, :location_city, :location_postal_code], 

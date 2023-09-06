@@ -1,5 +1,5 @@
 class MuchoPartiesController < ApplicationController
-  before_action :set_mucho_party, only: [:show, :create, :update, :destroy]
+  before_action :set_mucho_party, only: [:show, :update, :destroy]
 
   def index
     @mucho_parties = MuchoParty.all
@@ -9,7 +9,6 @@ class MuchoPartiesController < ApplicationController
 
   def show
     # debugger
-    # @mucho_party = MuchoParty.find(params[:id])
     render :show
   end
 
@@ -23,7 +22,6 @@ class MuchoPartiesController < ApplicationController
   end
 
   def update
-    @mucho_party = MuchoParty.find(params[:id])
     if @mucho_party.update(mucho_party_params)
       render :update
     else
@@ -32,8 +30,7 @@ class MuchoPartiesController < ApplicationController
   end
 
   def destroy
-    @mucho_party = MuchoParty.find(params[:id])
-    if @mucho_party.delete
+    if @mucho_party.destroy
       render :destroy
     else
       render json: { errors: @mucho_party.errors.full_messages }, status: :unprocessable_entity
@@ -42,13 +39,16 @@ class MuchoPartiesController < ApplicationController
 
   private
 
+  def set_mucho_party
+    @mucho_party = MuchoParty.find(params[:id])
+  end
+
   def mucho_party_params
     params.require(:mucho_party).permit(
       :party_name,
       :party_date,
       :party_time,
       :party_host_id,
-      :party_location_id
-    )
+      :party_location_id)
   end
 end

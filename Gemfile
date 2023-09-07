@@ -94,6 +94,13 @@ gem 'country_select', '~> 8.0'
 # version between base 10 and base 2.
 gem 'bigdecimal', '~> 3.1', '>= 3.1.4'
 
+# Byebug is a Ruby debugger. It's implemented using the Trace-
+# Point C API for execution control and the Debug Inspector C
+# API for call stack navigation. The core component provides
+# support that front-ends can build on. It provides breakpoint
+# handling and bindings for stack frames among other things and
+# it comes with an easy to use command line interface.
+gem 'byebug', '~> 11.1', '>= 11.1.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

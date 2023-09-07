@@ -8,8 +8,11 @@ class MuchoPartiesController < ApplicationController
   end
 
   def show
-    # debugger
-    render :show
+    begin
+      render :show
+    rescue => error
+      render json: { error: error.message }, status: :bad_request
+    end
   end
 
   def create

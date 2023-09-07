@@ -1,4 +1,4 @@
-# All we are doing is create a single mucho_party with a single host.
+# Creating a new location that can be used to host a party.
 
-json.partial! 'location', party: @mucho_location
+json.partial! 'location', location: @mucho_location
 json.message "Location successfully created"

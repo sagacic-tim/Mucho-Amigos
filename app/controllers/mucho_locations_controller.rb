@@ -5,11 +5,13 @@ class MuchoLocationsController < ApplicationController
   end
 
   def show
-    @mucho_location = mucho_location.find(params[:id])
+    @mucho_location = MuchoLocation.find(params[:id])
     render :show
   end
 
   def create
+    puts "This is where byebug is located"
+    byebug
     @mucho_location = MuchoLocation.new(mucho_location_params)
     if @mucho_location.save
       render :create
@@ -19,7 +21,7 @@ class MuchoLocationsController < ApplicationController
   end
 
   def update
-    @mucho_location = MuchoLocagtion.find(params[:id])
+    @mucho_location = MuchoLocation.find(params[:id])
     if @mucho_location.update(mucho_location_params)
       render :update
     else
@@ -39,7 +41,7 @@ class MuchoLocationsController < ApplicationController
   private
 
   def mucho_location_params
-    params.require(:mucho_amigo).permit(
+    params.require(:mucho_locations).permit(
       :location_name,
       :location_description,
       :location_phone,

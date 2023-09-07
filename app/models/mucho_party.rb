@@ -1,6 +1,6 @@
 class MuchoParty < ApplicationRecord
   # Each MuchoParty can have many attendees (MuchoAmigos), through the MuchoGuest join table
-  has_many :mucho_guests, dependent: :destroy
+
   has_many :mucho_amigos, through: :mucho_guests
   
   # Parties are related to location via MuchoLocations

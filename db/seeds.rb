@@ -153,7 +153,7 @@ location_2 = MuchoLocation.create!(
 )
 location_3 = MuchoLocation.create!(
   location_name: "TreePeople",
-  location_description: "TreePeople’s mission is to inspire, engage and support people to take personal responsibility for the urban environment, making it safe, healthy, fun and sustainable and to share our process as a model for the world.",
+  location_description: "TreePeople's mission is to inspire, engage and support people to take personal responsibility for the urban environment, making it safe, healthy, fun and sustainable and to share our process as a model for the world.",
   location_phone: "+18187534600",
   location_email: "info@treepeople.org",
   location_website_url: "http://www.treepeople.org/",
@@ -214,7 +214,7 @@ location_6 = MuchoLocation.create!(
   location_address: "",
   location_street_number: "961",
   location_street_name: "Ukiah",
-  location_street_suffix: "St",
+  location_street_suffix: "Street",
   location_city: "Mendocino",
   location_state_abbreviation: "CA",
   location_postal_code: "95460",

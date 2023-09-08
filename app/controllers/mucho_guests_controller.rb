@@ -39,7 +39,7 @@ class MuchoGuestsController < ApplicationController
   private
 
   def mucho_guest_params
-    params.require(:mucho_guest).permit(
+    params.require(:mucho_guests).permit(
       :amigo_id,
       :party_id
     )

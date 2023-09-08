@@ -4,12 +4,15 @@ class MuchoGuest < ApplicationRecord
   # belongs_to :amigo, class_name: 'MuchoAmigo', foreign_key: 'amigo_id'
   # belongs_to :party, class_name: 'MuchoParty', foreign_key: 'party_id'
   belongs_to :mucho_amigo, foreign_key: 'amigo_id'
-  belongs_to :mucho_party, foreign_key: 'party_id
+  belongs_to :mucho_party, foreign_key: 'party_id'
 
   # Enforce presence and uniqueness constraint
   validates :amigo_id, presence: true, uniqueness: { scope: :party_id, message: lambda { |record, _attrs|
     "The guest '#{record.amigo_name}' has already been added to the guest list for this party"
-  }}, unless: :skip_uniqueness_validation?
+   }}, unless: :skip_uniqueness_validation?
+
+  # validates :amigo_id, presence: true, unless: :skip_uniqueness_validation?
+  # validates :amigo_id, uniqueness: { scope: :party_id, message: ->(object, _data) { "The guest #{object.amigo_name} has already been added to the guest list for this party" } }, unless: :skip_uniqueness_validation?
 
   # Custom validation for uniqueness with a custom message
   # validate :custom_uniqueness_message, if: :amigo_and_party_present?

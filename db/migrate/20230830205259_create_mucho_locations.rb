@@ -16,7 +16,7 @@ class CreateMuchoLocations < ActiveRecord::Migration[7.0]
       t.string :location_country_code
       t.decimal :location_latitude, precision: 9, scale: 6
       t.decimal :location_longitude, precision: 9, scale: 6
-      t.boolean :location_available
+      t.boolean :location_available, not_null: true, allow_blank: true
 
       t.timestamps
     end

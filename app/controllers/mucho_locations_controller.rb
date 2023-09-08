@@ -10,8 +10,6 @@ class MuchoLocationsController < ApplicationController
   end
 
   def create
-    puts "This is where byebug is located"
-    byebug
     @mucho_location = MuchoLocation.new(mucho_location_params)
     if @mucho_location.save
       render :create

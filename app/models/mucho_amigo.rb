@@ -5,6 +5,12 @@ require "phonelib"
   # Each MuchoAmigo can attend many parties, through the MuchoGuest join table
   
   class MuchoAmigo < ApplicationRecord
+    # Each amigo can be a guest at a party so MuchoAmigo
+    # can have many guests. Since each guest can attend
+    # many parties, MuchoAmigo can have many parties
+    # through MuchoGuest
+    has_many :mucho_guests
+    has_many :mucho_parties, through: :mucho_guests
     
     before_save :normalize_phone
     before_save :validate_address_with_smartystreets
@@ -18,8 +24,6 @@ require "phonelib"
     serialize :original_attributes
     serialize :verification_info
     
-    # has_many :mucho_guests, dependent: :destroy
-    # has_many :mucho_parties, through: :mucho_guests
   private
 
   def formatted_phone

@@ -10,7 +10,7 @@ require "phonelib"
     # many parties, MuchoAmigo can have many parties
     # through MuchoGuest
     has_many :mucho_guests
-    has_many :mucho_parties, through: :mucho_guests
+    has_many :mucho_parties, through: :mucho_guests, source: :mucho_party
     
     before_save :normalize_phone
     before_save :validate_address_with_smartystreets

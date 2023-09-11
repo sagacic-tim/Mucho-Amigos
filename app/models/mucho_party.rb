@@ -9,7 +9,7 @@ class MuchoParty < ApplicationRecord
   has_many :mucho_guests
   # Each MuchoParty can have many attendees (MuchoAmigos),
   # through the MuchoGuest join table
-  has_many :mucho_amigos, through: :mucho_guests
+  has_many :mucho_amigos, through: :mucho_guests, source: :mucho_amigo
 
   # Ensure no duplicate party names at the same date and time
   validates :party_name, uniqueness: { 

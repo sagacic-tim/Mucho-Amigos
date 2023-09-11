@@ -1,8 +1,9 @@
 class MuchoGuest < ApplicationRecord
-
-  # MuchoGuest acts as a join model between MuchoAmigo and MuchoParty
   belongs_to :mucho_amigo, foreign_key: 'amigo_id'
   belongs_to :mucho_party, foreign_key: 'party_id'
+
+  has_many :mucho_amigos, through: :mucho_party
+  has_many :mucho_parties, through: :mucho_amigo
 
   # Enforce presence and uniqueness constraint
   validates :amigo_id, presence: true, uniqueness: { scope: :party_id, message: lambda { |record, _attrs|

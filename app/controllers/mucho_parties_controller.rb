@@ -40,6 +40,20 @@ class MuchoPartiesController < ApplicationController
     end
   end
 
+  def party_location
+    # Your logic to fetch and render the party location goes here
+    mucho_party = MuchoParty.find(params[:id])
+    location = mucho_party.party_location
+    render json: { location: location }
+  end
+
+  def party_host
+    # Your logic to fetch and render the party location goes here
+    mucho_party = MuchoParty.find(params[:id])
+    host = mucho_party.party_host
+    render json: { host: host }
+  end
+
   private
 
   def set_mucho_party

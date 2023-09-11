@@ -36,6 +36,26 @@ class MuchoGuestsController < ApplicationController
     end
   end
 
+  def mucho_amigos
+    @mucho_guest = MuchoGuest.find(params[:id])
+    @amigos = @mucho_guest.mucho_amigo # assumes mucho_amigo is accessible through mucho_guest
+    render json: { amigos: @amigos.as_json }
+  end
+
+  def mucho_parties
+    @mucho_guest = MuchoGuest.find(params[:id])
+    @parties = @mucho_guest.mucho_party
+    puts @parties.inspect
+    render json: { parties: @parties }
+  end
+
+  # def mucho_parties
+  #   mucho_guest = MuchoGuest.find(params[:id])
+  #   parties = mucho_guest.mucho_parties # Note the plural 'parties'
+  #   puts parties.inspect
+  #   render json: { parties: parties.as_json }
+  # end
+  
   private
 
   def mucho_guest_params

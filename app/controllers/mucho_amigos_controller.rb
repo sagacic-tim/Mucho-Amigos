@@ -45,6 +45,12 @@ class MuchoAmigosController < ApplicationController
     end
   end
 
+  def associated_parties
+    amigo = MuchoAmigo.find(params[:id])
+    associated_parties = amigo.mucho_parties
+    render json: associated_parties
+  end
+
   private
 
   def mucho_amigo_params

@@ -36,6 +36,18 @@ class MuchoLocationsController < ApplicationController
     end
   end
 
+  def mucho_parties
+    begin
+      mucho_location = MuchoLocation.find(params[:id])
+      parties = mucho_location.mucho_parties
+      render json: { mucho_parties: parties }, status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "MuchoLocation with id #{params[:id]} not found" }, status: :not_found
+      rescue => e
+        render json: { error: "An unexpected error occurred: #{e.message}" }, status: :internal_server_error
+    end
+  end
+
   private
 
   def mucho_location_params

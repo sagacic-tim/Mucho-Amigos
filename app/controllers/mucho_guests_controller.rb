@@ -49,12 +49,18 @@ class MuchoGuestsController < ApplicationController
     render json: { parties: @parties }
   end
 
-  # def mucho_parties
-  #   mucho_guest = MuchoGuest.find(params[:id])
-  #   parties = mucho_guest.mucho_parties # Note the plural 'parties'
-  #   puts parties.inspect
-  #   render json: { parties: parties.as_json }
-  # end
+  def associated_parties
+    # Assuming you've passed the MuchoGuest ID as :id in the route
+    mucho_guest = MuchoGuest.find(params[:id])
+  
+    # If the record exists, find all the parties that the associated MuchoAmigo is a part of.
+    if mucho_guest
+      all_parties_for_amigo = mucho_guest.mucho_amigo.mucho_parties
+      render json: all_parties_for_amigo
+    else
+      render json: { error: 'MuchoGuest not found' }, status: :not_found
+    end
+  end
   
   private
 

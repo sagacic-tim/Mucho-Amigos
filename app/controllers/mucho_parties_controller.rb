@@ -54,6 +54,13 @@ class MuchoPartiesController < ApplicationController
     render json: { host: host }
   end
 
+  def mucho_guests
+    mucho_party = MuchoParty.find(params[:id])
+    guests = mucho_party.mucho_guests
+    puts guests.to_a.inspect  # This will force the SQL query to execute
+    render json: { guests: guests }
+  end
+  
   private
 
   def set_mucho_party

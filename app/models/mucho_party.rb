@@ -1,12 +1,13 @@
 class MuchoParty < ApplicationRecord
   # Parties are related to a party_location_id which is a foreign
   # key to MuchoLocation
-  belongs_to :party_location, class_name: 'MuchoLocation', optional: false
+  belongs_to :party_location, class_name: 'MuchoLocation', foreign_key: 'party_location_id', optional: false
   # Parties are related to a party_host_id which is a foreign key
   # to MuchoAmigo.
-  belongs_to :party_host, class_name: 'MuchoAmigo', optional: false
+  belongs_to :mucho_amigo, class_name: 'MuchoAmigo', foreign_key: 'party_host_id'
   # Each party can have many guests
-  has_many :mucho_guests
+  # Explicitly specify the foreign key here
+  has_many :mucho_guests, foreign_key: 'party_id' 
   # Each MuchoParty can have many attendees (MuchoAmigos),
   # through the MuchoGuest join table
   has_many :mucho_amigos, through: :mucho_guests, source: :mucho_amigo
@@ -16,6 +17,17 @@ class MuchoParty < ApplicationRecord
     scope: [:party_date, :party_time], 
     message: "cannot have duplicate party names at the same date and time" 
   }, unless: :skip_uniqueness_validation?
+
+  public
+
+  def as_json(options={})
+    super(options).tap do |json|
+      if json['party_time'].present?
+        parsed_time = Time.parse(json['party_time'])
+        json['party_time'] = parsed_time.strftime('%H:%M:%S')
+      end
+    end
+  end
 
   private
 
@@ -30,14 +42,6 @@ class MuchoParty < ApplicationRecord
       true
     rescue ArgumentError
       false
-    end
-  end
-
-  def as_json(options={})
-    super(options).tap do |json|
-      if json['party_time'].present?
-        json['party_time'] = json['party_time'].strftime('%H:%M:%S')
-      end
     end
   end
 end

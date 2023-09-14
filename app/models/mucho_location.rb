@@ -4,7 +4,7 @@ require "phonelib"
 
 class MuchoLocation < ApplicationRecord
   # Each location can host many parties
-  has_many :mucho_parties, dependent: :destroy
+  has_many :mucho_parties, dependent: :destroy, foreign_key: 'party_location_id'
 
   before_save :normalize_location_phone
   before_save :validate_address_with_smartystreets

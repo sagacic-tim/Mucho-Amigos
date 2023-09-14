@@ -9,7 +9,7 @@ require "phonelib"
     # can have many guests. Since each guest can attend
     # many parties, MuchoAmigo can have many parties
     # through MuchoGuest
-    has_many :mucho_guests
+    has_many :mucho_guests, foreign_key: 'amigo_id'
     has_many :mucho_parties, through: :mucho_guests, source: :mucho_party
     
     before_save :normalize_phone

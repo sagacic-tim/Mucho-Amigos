@@ -11,6 +11,7 @@ require "phonelib"
     # through MuchoGuest
     has_many :mucho_guests, foreign_key: 'amigo_id'
     has_many :mucho_parties, through: :mucho_guests, source: :mucho_party
+    has_many :parties_by_this_amigo_as_host, class_name: 'MuchoParty', foreign_key: 'party_host_id'
     
     before_save :normalize_phone
     before_save :validate_address_with_smartystreets

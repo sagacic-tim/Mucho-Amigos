@@ -51,6 +51,23 @@ class MuchoAmigosController < ApplicationController
     render json: associated_parties
   end
 
+  def parties_by_this_amigo_as_host
+    begin
+      party_host = MuchoAmigo.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+      render json: { error: "MuchoAmigo not found, dumb ass" }, status: :not_found
+      return
+    end
+
+    parties_by_this_amigo_as_host = party_host.parties_by_this_amigo_as_host
+
+    if parties_by_this_amigo_as_host.empty?
+      render json: { message: "This loser MuchoAmigo is not hosting any parties, WTF" }, status: :ok
+    else
+      render json: { parties_by_this_amigo_as_host: parties_by_this_amigo_as_host }, status: :ok
+    end
+  end
+
   private
 
   def mucho_amigo_params

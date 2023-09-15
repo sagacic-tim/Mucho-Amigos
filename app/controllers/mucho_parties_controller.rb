@@ -54,11 +54,33 @@ class MuchoPartiesController < ApplicationController
     render json: { host: host }
   end
 
-  def mucho_guests
+  def party_guests
     mucho_party = MuchoParty.find(params[:id])
-    guests = mucho_party.mucho_guests
-    puts guests.to_a.inspect  # This will force the SQL query to execute
-    render json: { guests: guests }
+    party_guests = mucho_party.mucho_guests
+    puts party_guests.to_a.inspect  # This will force the SQL query to execute
+    render json: { party_guests: party_guests }
+  end
+  
+  def other_parties_by_party_host
+    # Find the current party by ID
+    begin
+      mucho_party = MuchoParty.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "No Party found for that mucho_party_id" }, status: :not_found
+      return
+    end
+
+    # Get the ID of the host of the current party
+    party_host_id = mucho_party.party_host_id
+
+    # Find all other parties hosted by the same host
+    other_parties_by_party_host = MuchoParty.where(party_host_id: party_host_id).where.not(id: params[:id])
+
+    if other_parties_by_party_host.empty?
+      render json: { message: "This party host is not hosting any other parties." }, status: :ok
+    else
+      render json: { other_parties_by_party_host: other_parties_by_party_host }, status: :ok
+    end
   end
   
   private

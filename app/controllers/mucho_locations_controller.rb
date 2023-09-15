@@ -36,7 +36,7 @@ class MuchoLocationsController < ApplicationController
     end
   end
 
-  def mucho_parties
+  def parties_at_this_location
     begin
       mucho_location = MuchoLocation.find(params[:id])
       parties = mucho_location.mucho_parties

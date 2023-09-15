@@ -36,18 +36,19 @@ class MuchoGuestsController < ApplicationController
     end
   end
 
-  def mucho_amigos
-    @mucho_guest = MuchoGuest.find(params[:id])
-    @amigos = @mucho_guest.mucho_amigo # assumes mucho_amigo is accessible through mucho_guest
-    render json: { amigos: @amigos.as_json }
-  end
-
-  def mucho_parties
-    @mucho_guest = MuchoGuest.find(params[:id])
-    @parties = @mucho_guest.mucho_party
-    puts @parties.inspect
-    render json: { parties: @parties }
-  end
+  def party_guest_details
+    begin
+      mucho_guest = MuchoGuest.find(params[:id])
+      party_guest = mucho_guest.mucho_amigo # assumes mucho_amigo is accessible through mucho_guest
+      if party_guest.nil?
+        render json: { message: "Associated Amigo does not exist." }, status: :not_found
+        return
+      end
+      render json: { party_guest: party_guest.as_json }
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "Amigo as Party Guest not found" }, status: :not_found
+    end
+  end      
 
   def associated_parties
     # Assuming you've passed the MuchoGuest ID as :id in the route
@@ -58,7 +59,7 @@ class MuchoGuestsController < ApplicationController
       all_parties_for_amigo = mucho_guest.mucho_amigo.mucho_parties
       render json: all_parties_for_amigo
     else
-      render json: { error: 'MuchoGuest not found' }, status: :not_found
+      render json: { error: 'Party Guest not found' }, status: :not_found
     end
   end
   

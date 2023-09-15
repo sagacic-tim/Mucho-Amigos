@@ -4,7 +4,7 @@ class MuchoParty < ApplicationRecord
   belongs_to :party_location, class_name: 'MuchoLocation', foreign_key: 'party_location_id', optional: false
   # Parties are related to a party_host_id which is a foreign key
   # to MuchoAmigo.
-  belongs_to :mucho_amigo, class_name: 'MuchoAmigo', foreign_key: 'party_host_id'
+  belongs_to :party_host, class_name: 'MuchoAmigo', foreign_key: 'party_host_id'
   # Each party can have many guests
   # Explicitly specify the foreign key here
   has_many :mucho_guests, foreign_key: 'party_id' 

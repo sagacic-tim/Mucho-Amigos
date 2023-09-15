@@ -16,7 +16,8 @@ Rails.application.routes.draw do
       # all guests associated with a particular party
       get 'party_location'
       get 'party_host'
-      get 'mucho_guests', to: 'mucho_parties#mucho_guests'
+      get 'party_guests', to: 'mucho_parties#mucho_guests'
+      get 'other_parties_by_party_host'
     end
   end
   
@@ -24,8 +25,7 @@ Rails.application.routes.draw do
     only: [:index, :show, :create, :update, :destroy],
     defaults: { format: 'json' } do
     member do
-      get 'mucho_parties'
-      get 'mucho_amigos'
+      get 'party_guest_details'
       get 'associated_parties', to: 'mucho_guests#associated_parties'
     end
   end
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     defaults: { format: 'json' } do
       member do
         get 'associated_parties'
+        get 'parties_by_this_amigo_as_host'
       end
     end
 
@@ -42,7 +43,7 @@ Rails.application.routes.draw do
     only: [:index, :show, :create, :update, :destroy],
     defaults: { format: 'json' } do
       member do
-        get 'mucho_parties', to: 'mucho_locations#mucho_parties'
+        get 'parties_at_this_location', to: 'mucho_locations#parties_at_this_location'
       end
     end
 end

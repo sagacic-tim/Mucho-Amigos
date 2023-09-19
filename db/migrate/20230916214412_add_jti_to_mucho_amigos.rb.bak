@@ -1,0 +1,16 @@
+class AddJtiToMuchoAmigos < ActiveRecord::Migration[7.0]
+  def up
+    add_column :mucho_amigos, :jti, :string
+    # generate jti for existing records, using any logic you see fit
+    MuchoAmigo.all.each do |mucho_amigo|
+      mucho_amigo.update!(jti: SecureRandom.uuid)
+    end
+    change_column_null :mucho_amigos, :jti, false
+    add_index :mucho_amigos, :jti, unique: true
+  end
+  
+  def down
+    remove_index :mucho_amigos, :jti
+    remove_column :mucho_amigos, :jti
+  end
+end

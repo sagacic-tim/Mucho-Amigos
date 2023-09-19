@@ -102,6 +102,26 @@ gem 'bigdecimal', '~> 3.1', '>= 3.1.4'
 # it comes with an easy to use command line interface.
 gem 'byebug', '~> 11.1', '>= 11.1.3'
 
+# Devise is a flexible authentication solution for Rails based on
+# Warden. It:
+#   Is Rack based;
+#   Is a complete MVC solution based on Rails engines;
+#   Allows you to have multiple models signed in at the same time;
+#   Is based on a modularity concept: use only what you really need.
+gem 'devise', '~> 4.9', '>= 4.9.2'
+
+# devise-jwt is a Devise extension which uses JWT tokens for user
+# authentication. It follows secure by default principle.
+gem 'devise-jwt', '~> 0.11.0'
+
+# A fast JSON:API serializer for Ruby Objects.
+# Declaration syntax similar to Active Model Serializer
+# Support for belongs_to, has_many and has_one
+# Support for compound documents (included)
+# Optimized serialization of compound documents
+# Caching
+gem 'jsonapi-serializer', '~> 2.2'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

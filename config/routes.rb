@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'api#info'
   # This creates standard RESTful routes (index, show,
   # create, update, and destroy). Specifying 'json format
   # streamlines the API by making it less necessary to
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
       member do
         get 'associated_parties'
         get 'parties_by_this_amigo_as_host'
+        get 'locations_for_host'
       end
     end
 
@@ -46,4 +48,14 @@ Rails.application.routes.draw do
         get 'parties_at_this_location', to: 'mucho_locations#parties_at_this_location'
       end
     end
+  end
+
+  devise_for :mucho_amigos, controllers: {
+    sessions: 'mucho_amigos/sessions',
+    registrations: 'mucho_amigos/registrations'
+  }, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    sign_up: 'signup'
+  }
 end

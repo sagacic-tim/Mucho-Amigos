@@ -1,6 +1,8 @@
 json.extract! amigo,             
 :id,
 :full_name,
+:user_name,
+:password,
 :email,
 :phone,
 :address,

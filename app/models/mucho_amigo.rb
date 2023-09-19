@@ -5,25 +5,37 @@ require "phonelib"
   # Each MuchoAmigo can attend many parties, through the MuchoGuest join table
   
   class MuchoAmigo < ApplicationRecord
-    # Each amigo can be a guest at a party so MuchoAmigo
-    # can have many guests. Since each guest can attend
-    # many parties, MuchoAmigo can have many parties
-    # through MuchoGuest
-    has_many :mucho_guests, foreign_key: 'amigo_id'
-    has_many :mucho_parties, through: :mucho_guests, source: :mucho_party
-    has_many :parties_by_this_amigo_as_host, class_name: 'MuchoParty', foreign_key: 'party_host_id'
-    
-    before_save :normalize_phone
-    before_save :validate_address_with_smartystreets
-    
-    validates :full_name, presence: true, length: {minimum: 3}
-    validates :email, email: {mode: :strict, require_fqdn: true}
-    validates :phone, presence: true
-    validates :party_animal, inclusion: [true, false]
-    validates :personal_bio, presence: true
-    
-    serialize :original_attributes
-    serialize :verification_info
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and
+  # :omniauthable. Also includse hte JWT modules
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable,
+  :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
+
+  # Each amigo can be a guest at a party so MuchoAmigo
+  # can have many guests. Since each guest can attend
+  # many parties, MuchoAmigo can have many parties
+  # through MuchoGuest
+  has_many :mucho_guests, foreign_key: 'amigo_id'
+  has_many :mucho_parties, through: :mucho_guests, source: :mucho_party
+  has_many :parties_by_this_amigo_as_host, class_name: 'MuchoParty', foreign_key: 'party_host_id'
+  has_many :hosted_parties, class_name: 'MuchoParty', foreign_key: 'party_host_id'
+  
+  before_save :normalize_phone
+  before_save :validate_address_with_smartystreets
+  
+  validates :full_name, presence: true, length: {minimum: 3}
+  validates :email, email: {mode: :strict, require_fqdn: true}
+  validates :phone, presence: true
+  validates :party_animal, inclusion: [true, false]
+  validates :personal_bio, presence: true
+  
+  serialize :original_attributes
+  serialize :verification_info
     
   private
 

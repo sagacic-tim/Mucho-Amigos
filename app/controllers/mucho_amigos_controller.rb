@@ -68,6 +68,25 @@ class MuchoAmigosController < ApplicationController
     end
   end
 
+  def locations_for_host
+    begin
+      mucho_amigo = MuchoAmigo.find(params[:id])
+      hosted_parties = mucho_amigo.hosted_parties
+      locations = hosted_parties.map { |party| MuchoLocation.find(party.party_location_id) }
+      
+      if locations.empty?
+        render json: { message: "This party host is not hosting any parties at any location." }, status: :ok
+      else
+        render json: { locations: locations }, status: :ok
+      end
+      
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Party Host with MuchoAmigo id #{params[:id]} was not found" }, status: :not_found
+    rescue => e
+      render json: { error: "An unexpected error occurred: #{e.message}" }, status: :internal_server_error
+    end
+  end
+
   private
 
   def mucho_amigo_params

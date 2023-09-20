@@ -9,14 +9,14 @@ class MuchoAmigosController < ApplicationController
     render :show
   end
 
-  def create
-    @mucho_amigo = MuchoAmigo.new(mucho_amigo_params)
-    if @mucho_amigo.save
-      render :create
-    else
-      render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
+  # def create
+  #   @mucho_amigo = MuchoAmigo.new(mucho_amigo_params)
+  #   if @mucho_amigo.save
+  #     render :create
+  #   else
+  #     render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   def create_party
     @mucho_party = MuchoParty.new(mucho_amigo_params)
@@ -27,14 +27,14 @@ class MuchoAmigosController < ApplicationController
     end
   end
 
-  def update
-    @mucho_amigo = MuchoAmigo.find(params[:id])
-    if @mucho_amigo.update(mucho_amigo_params)
-      render :update
-    else
-      render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   @mucho_amigo = MuchoAmigo.find(params[:id])
+  #   if @mucho_amigo.update(mucho_amigo_params)
+  #     render :update
+  #   else
+  #     render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   def destroy
     @mucho_amigo = MuchoAmigo.find(params[:id])
@@ -92,6 +92,7 @@ class MuchoAmigosController < ApplicationController
   def mucho_amigo_params
     params.require(:mucho_amigo).permit(
       :full_name,
+      :user_name,
       :email,
       :phone,
       :address,

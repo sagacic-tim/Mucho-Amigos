@@ -11,8 +11,9 @@ require 'faker'
 # Ensure Faker generates unique data by resetting its seed
 Faker::UniqueGenerator.clear
 
-party_host_1 = MuchoAmigo.create!(
+mucho_amigo_1 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "28980", 
   street_name: "Gladiolus",
@@ -28,8 +29,9 @@ party_host_1 = MuchoAmigo.create!(
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
-party_host_2 = MuchoAmigo.create!(
+mucho_amigo_2 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "1187", 
   street_name: "Ojai",
@@ -45,8 +47,9 @@ party_host_2 = MuchoAmigo.create!(
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
-party_host_3 = MuchoAmigo.create!(
+mucho_amigo_3 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "19837", 
   street_name: "93rd",
@@ -62,8 +65,9 @@ party_host_3 = MuchoAmigo.create!(
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
-party_host_4 = MuchoAmigo.create!(
+mucho_amigo_4 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "218", 
   street_name: "Cedar",
@@ -79,8 +83,9 @@ party_host_4 = MuchoAmigo.create!(
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
-party_host_5 = MuchoAmigo.create!(
+mucho_amigo_5 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "821", 
   street_name: "S 11th",
@@ -96,8 +101,9 @@ party_host_5 = MuchoAmigo.create!(
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
-party_host_6 = MuchoAmigo.create!(
+mucho_amigo_6 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
+  user_name: Faker::Name.user_name,
   address: "",
   street_number: "3925", 
   street_name: "Monte Vista",
@@ -242,62 +248,123 @@ location_7 = MuchoLocation.create!(
   location_available: true
 )
 
-MuchoParty.create!(
+party_1 = MuchoParty.create!(
   party_name: "Railing at Native Fields About Coding",
   party_date: "2023-10-17",
   party_time: "2023-10-17T04:00:00.000-07:00",
   party_location_id: location_1.id,
-  party_host_id: party_host_1.id
+  party_host_id: mucho_amigo_1.id
 )
 
-MuchoParty.create!(
+party_2 = MuchoParty.create!(
   party_name: "Coding at Home Restaurant Till Dawn",
   party_date: "2023-11-04",
   party_time: "2023-11-04T17:30:00.080-07:00",
   party_location_id: location_2.id,
-  party_host_id: party_host_2.id
+  party_host_id: mucho_amigo_2.id
 )
 
-MuchoParty.create!(
+party_3 = MuchoParty.create!(
   party_name: "Cathcing Rails in Knarly Surf at Paradise Cove",
   party_date: "2023-09-15",
   party_time: "2023-09-15T10:00:00.000-07:00",
   party_location_id: location_3.id,
-  party_host_id: party_host_3.id,
+  party_host_id: mucho_amigo_3.id,
 )
 
-MuchoParty.create!(
+party_4 = MuchoParty.create!(
   party_name: "A Ruby of a Party at Gladstone's",
   party_date: "2023-10-01",
   party_time: "2023-10-01T03:30:00.000-07:00",
   party_location_id: location_5.id,
-  party_host_id: party_host_4.id
+  party_host_id: mucho_amigo_4.id
 )
 
-MuchoParty.create!(
+party_5 = MuchoParty.create!(
   party_name: "Coding at Cafe Beaujolais Till Dawn",
   party_date: "2023-09-30",
   party_time: "2023-09-30T02:30:00.000-07:00",
   party_location_id: location_6.id,
-  party_host_id: party_host_5.id
+  party_host_id: mucho_amigo_5.id
 )
 
-MuchoParty.create!(
+party_6 = MuchoParty.create!(
   party_name: "Hitting the Deck with Awesome Code",
   party_date: "2023-11-27",
   party_time: "2023-11-27T01:00:00.000-07:00",
   party_location_id: location_7.id,
-  party_host_id: party_host_6.id,
+  party_host_id: mucho_amigo_6.id,
 )
 
-MuchoParty.create!(
+party_7 = MuchoParty.create!(
   party_name: "Compiling with The Tree People",
   party_date: "2023-12-31",
   party_time: "2023-12-31T04:59:59.999-07:00",
   party_location_id: location_4.id,
-  party_host_id: party_host_1.id
+  party_host_id: mucho_amigo_1.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_2.id
+  party_id: party_1.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_3.id
+  party_id: party_1.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_1.id
+  party_id: party_2.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_5.id
+  party_id: party_2.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_2.id
+  party_id: party_3.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_6.id
+  party_id: party_3.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_6.id
+  party_id: party_4.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_5.id
+  party_id: party_4.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_1.id
+  party_id: party_5.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_3.id
+  party_id: party_5.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_4.id
+  party_id: party_6.id
+)
+
+MuchoGuest.create!(
+  amigo_id: mucho_amigo_1.id
+  party_id: party_6.id
 )
 
 puts "#{MuchoAmigo.count} amigos created"
 puts "#{MuchoLocation.count} locations created"
 puts "#{MuchoParty.count} parties created"
+puts "#{MuchoGuest.count} guests created"

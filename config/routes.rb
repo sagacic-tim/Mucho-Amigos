@@ -44,14 +44,14 @@ Rails.application.routes.draw do
   resources :mucho_locations,
     only: [:index, :show, :create, :update, :destroy],
     defaults: { format: 'json' } do
-      member do
-        get 'parties_at_this_location', to: 'mucho_locations#parties_at_this_location'
-      end
+    member do
+      get 'parties_at_this_location', to: 'mucho_locations#parties_at_this_location'
     end
   end
 
   devise_for :mucho_amigos, controllers: {
     sessions: 'mucho_amigos/sessions',
+    confirmations: 'mucho_amigos/confirmations',
     registrations: 'mucho_amigos/registrations'
   }, path: '', path_names: {
     sign_in: 'login',

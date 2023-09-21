@@ -13,7 +13,9 @@ Faker::UniqueGenerator.clear
 
 mucho_amigo_1 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "28980", 
   street_name: "Gladiolus",
@@ -24,14 +26,15 @@ mucho_amigo_1 = MuchoAmigo.create!(
   postal_code: "91387",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
 mucho_amigo_2 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "1187", 
   street_name: "Ojai",
@@ -42,14 +45,15 @@ mucho_amigo_2 = MuchoAmigo.create!(
   postal_code: "93015",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
 mucho_amigo_3 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "19837", 
   street_name: "93rd",
@@ -60,14 +64,15 @@ mucho_amigo_3 = MuchoAmigo.create!(
   postal_code: "93505",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
 mucho_amigo_4 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "218", 
   street_name: "Cedar",
@@ -78,14 +83,15 @@ mucho_amigo_4 = MuchoAmigo.create!(
   postal_code: "85539",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
 mucho_amigo_5 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "821", 
   street_name: "S 11th",
@@ -96,14 +102,15 @@ mucho_amigo_5 = MuchoAmigo.create!(
   postal_code: "85901",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
 )
 mucho_amigo_6 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
-  user_name: Faker::Name.user_name,
+  user_name: Faker::Internet.username,
+  email: Faker::Internet.unique.email,
+  password: Faker::Internet.password(min_length: 10, max_length: 20, mix_case: true, special_characters: true),
   address: "",
   street_number: "3925", 
   street_name: "Monte Vista",
@@ -114,7 +121,6 @@ mucho_amigo_6 = MuchoAmigo.create!(
   postal_code: "97504",
   latitude: "", 
   longitude: "",
-  email: Faker::Internet.unique.email,
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
@@ -305,62 +311,62 @@ party_7 = MuchoParty.create!(
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_2.id
+  amigo_id: mucho_amigo_2.id,
   party_id: party_1.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_3.id
+  amigo_id: mucho_amigo_3.id,
   party_id: party_1.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_1.id
+  amigo_id: mucho_amigo_1.id,
   party_id: party_2.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_5.id
+  amigo_id: mucho_amigo_5.id,
   party_id: party_2.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_2.id
+  amigo_id: mucho_amigo_2.id,
   party_id: party_3.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_6.id
+  amigo_id: mucho_amigo_6.id,
   party_id: party_3.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_6.id
+  amigo_id: mucho_amigo_6.id,
   party_id: party_4.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_5.id
+  amigo_id: mucho_amigo_5.id,
   party_id: party_4.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_1.id
+  amigo_id: mucho_amigo_1.id,
   party_id: party_5.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_3.id
+  amigo_id: mucho_amigo_3.id,
   party_id: party_5.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_4.id
+  amigo_id: mucho_amigo_4.id,
   party_id: party_6.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_1.id
+  amigo_id: mucho_amigo_1.id,
   party_id: party_6.id
 )
 

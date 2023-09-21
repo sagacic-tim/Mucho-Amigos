@@ -6,15 +6,13 @@ require "phonelib"
   
   class MuchoAmigo < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and
-  # :omniauthable. Also includse hte JWT modules
-  include Devise::JWT::RevocationStrategies::JTIMatcher
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-
+  # :lockable, :timeoutable, :trackable, :omniauthable
+  # Also includes the JWT modules
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
-  :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
+         :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
+
+  # JWT Revocation strategy
+  include Devise::JWT::RevocationStrategies::JTIMatcher
 
   # Each amigo can be a guest at a party so MuchoAmigo
   # can have many guests. Since each guest can attend

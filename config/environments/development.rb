@@ -64,5 +64,9 @@ Rails.application.configure do
 
   # default url options — In production, :host should be set
   # to the actual host of your application.
+  config.action_mailer.perform_deliveries = true
+  # define default url options for the Devise mailer in our
+  # environment file
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 end

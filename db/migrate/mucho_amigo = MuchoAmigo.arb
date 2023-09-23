@@ -1,0 +1,19 @@
+mucho_amigo = MuchoAmigo.new(
+  full_name: "Timothy Michel",
+  user_name: "tmichel",
+  email: "tmichel@sagacicweb.com",
+  password: "DeVeLoPmEnT4213",
+  password_confirmation: "DeVeLoPmEnT4213",
+  phone: "+16264833220",
+  address: "",
+  street_number: "1404",
+  street_name: "Rodney",
+  street_suffix: "Road",
+  city: "West Covina",
+  state_abbreviation: "CA",
+  postal_code: "91792",
+  country_code: "US",
+  party_animal: true,
+  personal_bio: "love to party every night until dawn and then sleep all day"
+)
+mucho_amigo.save!

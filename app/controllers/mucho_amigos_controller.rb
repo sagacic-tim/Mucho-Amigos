@@ -1,4 +1,7 @@
 class MuchoAmigosController < ApplicationController
+  # this runs devise authentication before other methods
+  before_action :authenticate_mucho_amigo!
+
   def index
     @mucho_amigos = MuchoAmigo.all
     render :index

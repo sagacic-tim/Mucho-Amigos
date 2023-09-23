@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'api#info'
+
+  devise_for :mucho_amigos
+  get 'mucho_welcome/index', to: 'mucho_welcome#index'
+  root to: 'home#index'
+
   # This creates standard RESTful routes (index, show,
   # create, update, and destroy). Specifying 'json format
   # streamlines the API by making it less necessary to
@@ -49,13 +53,18 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :mucho_amigos, controllers: {
-    sessions: 'mucho_amigos/sessions',
-    confirmations: 'mucho_amigos/confirmations',
-    registrations: 'mucho_amigos/registrations'
-  }, path: '', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    sign_up: 'signup'
-  }
+  # devise_for :mucho_amigos, controllers: {
+  #   sessions: 'mucho_amigos/sessions',
+  #   confirmations: 'mucho_amigos/confirmations',
+  #   registrations: 'mucho_amigos/registrations'
+  # }, path: 'mucho_amigos',
+  # path_names: {
+  #   sign_in: 'login',
+  #   sign_out: 'logout',
+  #   sign_up: 'signup',
+  #   confirmation: 'confirmation' 
+  # }
+  # This will route both the root URL (/) and the
+  # /mucho_welcome/index URL to the index action of
+  # MuchoWelcomeController.
 end

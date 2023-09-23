@@ -27,14 +27,18 @@ class MuchoAmigos::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  private  def respond_with(current_amigo, _opts = {})
+  private
+  
+  def respond_with(current_amigo, _opts = {})
     render json: {
       status: { 
         code: 200, message: 'Logged in successfully.',
         data: { user: MuchoAmigoSerializer.new(current_amigo).serializable_hash[:data][:attributes] }
       }
     }, status: :ok
-  end  def respond_to_on_destroy
+  end
+
+  def respond_to_on_destroy
     if request.headers['Authorization'].present?
       jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last,
         Rails.application.credentials.devise_jwt_secret_key!).first

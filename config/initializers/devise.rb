@@ -10,7 +10,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  config.mailer_sender = 'noreply@example.com'  # Replace with your own email address
+  config.mailer_sender = 'tmichel@sagacicweb.com'  # Replace with your own email address
 
   require 'devise/orm/active_record'
 

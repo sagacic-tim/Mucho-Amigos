@@ -1,6 +1,12 @@
 require "application_responder"
+require 'action_controller'
 
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
+  include ActionController::MimeResponds
+  include ActionView::Layouts
+  include ActionController::Flash
+  include ActionController::Helpers
+
   self.responder = ApplicationResponder
   respond_to :html
 

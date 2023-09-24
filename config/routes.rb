@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :mucho_amigos
-  get 'mucho_welcome/index', to: 'mucho_welcome#index'
+  get 'mucho_welcome/index', to: 'home#index'
   root to: 'home#index'
 
   # This creates standard RESTful routes (index, show,

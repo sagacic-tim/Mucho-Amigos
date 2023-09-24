@@ -2,7 +2,7 @@
 
 class MuchoAmigos::SessionsController < Devise::SessionsController
   include RackSessionsFix
-  respond_to :json
+  respond_to :html, :json
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -29,32 +29,43 @@ class MuchoAmigos::SessionsController < Devise::SessionsController
 
   private
   
-  def respond_with(current_amigo, _opts = {})
-    render json: {
-      status: { 
-        code: 200, message: 'Logged in successfully.',
-        data: { user: MuchoAmigoSerializer.new(current_amigo).serializable_hash[:data][:attributes] }
-      }
-    }, status: :ok
+  def respond_with(resource, _opts = {})
+    puts Devise::SessionsController.ancestors
+    respond_to do |format|
+      format.html { redirect_to after_sign_in_path_for(resource) }  # Handle HTML response
+      format.json do  # Handle JSON response
+        render json: {
+          status: { 
+            code: 200, message: 'Logged in successfully.',
+            data: { user: MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes] }
+          }
+        }, status: :ok
+      end
+    end
   end
 
   def respond_to_on_destroy
-    if request.headers['Authorization'].present?
-      jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last,
-        Rails.application.credentials.devise_jwt_secret_key!).first
-      current_amigo = MuchoAmigo.find(jwt_payload['sub'])
-    end
-    
-    if current_amigo
-      render json: {
-        status: 200,
-        message: 'Logged out successfully.'
-      }, status: :ok
-    else
-      render json: {
-        status: 401,
-        message: "Couldn't find an active session for this amigo."
-      }, status: :unauthorized
+    respond_to do |format|
+      format.html { redirect_to after_sign_out_path_for(resource_name) }  # Handle HTML response
+      format.json do  # Handle JSON response
+        if request.headers['Authorization'].present?
+          jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last,
+            Rails.application.credentials.devise_jwt_secret_key!).first
+          current_amigo = MuchoAmigo.find(jwt_payload['sub'])
+        end
+
+        if current_amigo
+          render json: {
+            status: 200,
+            message: 'Logged out successfully.'
+          }, status: :ok
+        else
+          render json: {
+            status: 401,
+            message: "Couldn't find an active session for this amigo."
+          }, status: :unauthorized
+        end
+      end
     end
   end
 end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-  class MuchoAmigos::RegistrationsController < Devise::RegistrationsController
-    before_action :configure_sign_up_params, only: [:create, :update]
-    # before_action :configure_account_update_params, only: [:update]
-  
-    # POST /resource
-    def create
-      super
-    end
+class MuchoAmigos::RegistrationsController < Devise::RegistrationsController
+  before_action :configure_sign_up_params, only: [:create, :update]
+  # before_action :configure_account_update_params, only: [:update]
+
+  # POST /resource
+  def create
+    super
+  end
 
   # PUT /resource
   def update
@@ -35,6 +35,27 @@
     end
   end
 
+  def edit
+    @countries = ISO3166::Country.all.map do |country|
+      {
+        name: country.translations[I18n.locale.to_s] || country.name,
+        alpha2: country.alpha2,
+        states: (country.states || []).map do |state_info|
+          state_code, state = state_info
+          {
+            abbr: state_code,
+            name: state.translations[I18n.locale.to_s] || state.name
+          }
+        end
+      }
+    end
+
+    respond_to do |format|
+      format.html # Render the HTML template (edit.html.erb)
+      format.json { render json: @countries } # Respond with JSON data
+    end
+  end
+  
   # DELETE /resource
   # def destroy
   #   super

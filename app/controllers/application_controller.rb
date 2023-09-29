@@ -16,6 +16,22 @@ class ApplicationController < ActionController::Base
   # Run this before action only for Devise controllers
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+# Define a custom route for country_data
+def country_data
+  @countries = ISO3166::Country.all.map do |country|
+    {
+      name: country.name,
+      alpha2: country.alpha2,
+      states: country.states&.map { |state| { abbr: state.abbr, name: state.name } }
+    }
+  end
+
+  Rails.logger.info("country_data")
+  Rails.logger.info(@countries.to_json)
+
+  render json: @countries
+end
+
   protected
 
   # Configure permitted parameters for Devise

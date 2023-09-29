@@ -77,15 +77,6 @@ gem 'smartystreets_ruby_sdk'
 # :strict validation mode.
 gem 'email_validator', '~> 2.2', '>= 2.2.4'
 
-# gem 'country_select' provides a simple helper to get an
-# HTML select list of countries using the ISO 3166-1 standard.
-#
-# While the ISO 3166 standard is a relatively neutral source
-# of country names, it may still offend some users. Developers
-# are strongly advised to evaluate the suitability of this
-# list given their user base.
-gem 'country_select', '~> 8.0'
-
 # BigDecimal provides similar support for very large or very
 # accurate floating point numbers. Decimal arithmetic is also
 # useful for general calculation, because it provides the correct
@@ -128,6 +119,13 @@ gem 'responders', '~> 3.0', '>= 3.0.1'
 # Provides Sprockets implementation for Rails 4.x (and beyond)
 # Asset Pipeline
 gem 'sprockets-rails', '~> 3.0', '>= 3.0.4', :require => 'sprockets/railtie'
+
+# Countries is a collection of all sorts of useful information
+# for every country in the ISO 3166 standard. It contains info
+# for the following standards ISO3166-1 (countries), ISO3166-2
+# (states/subdivisions), ISO4217 (currency) and E.164 (phone
+# numbers).
+gem 'countries', '~> 5.6', require: 'countries/global'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -1,0 +1,101 @@
+.welcome_page_container {
+  background-color: rgba(255,64,128,0.5);
+  background-blend-mode: overlay;
+  border-radius: 20px;
+  padding: 0.5rem;
+  color: rgb(64,0,0);
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 6px rgba(32,0,0,0.25);
+}
+.welcome_page_container h1 {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  margin-block-start: .67em;
+  margin-block-end: .67em;
+  text-align: center;
+}
+.devise_form_containers h2 {
+  margin: 0.5rem;
+  text-align: center;
+}
+.devise_form_containers h3 {
+  margin: 0.5rem;
+  text-align: center;
+}
+.devise_form_containers {
+  display: grid;
+  align-content: center;
+  grid-gap: 0.33rem;
+  justify-content: center;
+}
+.devise_form_containers p {
+  margin: 0.5rem;
+  text-align: center;
+}
+
+.devise_form_containers .email_styles {
+  color: rgb(128, 64, 255);
+  font-weight: 600;
+}
+
+.devise_form_containers form .field label {
+  line-height: 1.5rem;
+}
+
+.devise_form_containers form .actions > input:nth-child(1) {
+  background-image: linear-gradient(rgb(48, 228, 64) 50%, rgb(32, 160, 48) 100%);
+  color: rgb(196,255,212);
+  padding: 0.35rem;
+  border-radius: 0.35rem;
+  transition: all 0.5s;
+}
+
+.devise_form_containers form .actions > input:nth-child(1):hover {
+  background-image: linear-gradient(rgb(32, 196, 48) 50%, rgb(16, 144, 32) 100%);
+  color: rgb(208,255,240);
+}
+
+input[type="submit"][value="Update"]::after {
+  content: attr(value); /* Set the content to the value attribute */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.devise_form_containers form button {
+  background-image: linear-gradient(rgb(228, 48, 64) 50%, rgb(160, 32, 48) 100%);
+  border-radius: 0.35rem;
+  color: rgb(255,196,212);
+  padding: 0.35rem;
+}
+
+.devise_form_containers form button:hover {
+  background-image: linear-gradient(rgb(196, 32, 48) 50%, rgb(148, 24, 32) 100%);
+  color: rgb(240,255,208);
+}
+
+.devise_form_containers .field input {
+  min-width: 480px;
+}
+
+.devise_form_containers form .field select#mucho_amigo_state_abbreviation,
+.devise_form_containers form .field select#mucho_amigo_country_code {
+  min-width: 480px;
+}
+
+.devise_form_containers form .field input#mucho_amigo_party_animal {
+  min-width: 24px;
+  height: 24px;
+}
+
+.cancel_button_container p {
+  justify-self: left;
+  margin-bottom: 0.125rem;
+  text-align: left;
+}
+
+.edit_mucho_amigo {
+  display: grid;
+  justify-content: center;
+  grid-gap: 1.0rem 0;
+  max-width: min-content;
+}

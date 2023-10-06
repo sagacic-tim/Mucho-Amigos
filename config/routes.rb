@@ -1,22 +1,23 @@
 Rails.application.routes.draw do
 
-  devise_for :mucho_amigos, controllers: {
-    registrations: 'mucho_amigos/registrations'
-  }
   get 'mucho_welcome/index', to: 'home#index'
   get 'home/index', to: 'home#index'
   # Define a custom route for country_data
   get 'country_data', to: 'application#country_data'
   get 'favicon.ico', to: 'application#images/favicon'
+  # put '/mucho_amigos/registrations/update', to: 'mucho_amigos/registrations#update', as: 'mucho_amigo_registration_path'
   root to: 'home#index'
+
+  devise_for :mucho_amigos, controllers: {
+    registrations: 'mucho_amigos/registrations'
+  }
 
   # This creates standard RESTful routes (index, show,
   # create, update, and destroy). Specifying 'json format
   # streamlines the API by making it less necessary to
   # appendb'.json' to URLs when making requests.
-  resources :mucho_parties,
-      only: [:index, :show, :create, :update, :destroy],
-      defaults: { format: 'json' } do
+  resources :mucho_parties, only: [:index, :show, :create, :update, :destroy],
+    defaults: { format: 'json' } do
     # member routes operate on a single instance specified
     # by the ID in the URL, i.e. /mucho_parties/1/party_location
     member do
@@ -44,12 +45,12 @@ Rails.application.routes.draw do
   resources :mucho_amigos,
     only: [:index, :show, :create, :update, :destroy],
     defaults: { format: 'json' } do
-      member do
-        get 'associated_parties'
-        get 'parties_by_this_amigo_as_host'
-        get 'locations_for_host'
-      end
+    member do
+      get 'associated_parties'
+      get 'parties_by_this_amigo_as_host'
+      get 'locations_for_host'
     end
+  end
 
   resources :mucho_locations,
     only: [:index, :show, :create, :update, :destroy],

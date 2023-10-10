@@ -1,59 +1,85 @@
-class MuchoAmigosController < ApplicationController
+class MuchoAmigosController < Devise::RegistrationsController
+  respond_to :json
+  include JsonResponseHelper
   # this runs devise authentication before other methods
-  before_action :authenticate_mucho_amigo!
+  devise :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :validatable, :confirmable
+  before_action :authenticate_mucho_amigo!,
+                :account_params, only: [:create, :update]
 
+  # List all Amigos
   def index
     @mucho_amigos = MuchoAmigo.all
     render :index
   end
 
+  # Show a single Amigo mucho_amigos/:id
   def show
     @mucho_amigo = MuchoAmigo.find(params[:id])
     render :show
   end
 
-  # def create
-  #   @mucho_amigo = MuchoAmigo.new(mucho_amigo_params)
-  #   if @mucho_amigo.save
-  #     render :create
-  #   else
-  #     render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
+  # POST /resource/
+  def create
+    @mucho_amigo = MuchoAmigo.new(account_params)
 
-  def create_party
-    @mucho_party = MuchoParty.new(mucho_amigo_params)
-    if @mucho_amigo.save
-      render :create
-    else
-      render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
+    respond_to do |format|
+      if @mucho_amigo.save
+        # Assuming you have a method to send confirmation instructions
+        @mucho_amigo.send_confirmation_instructions
+        
+        format.json {
+          render_json_success('Confirmation instructions sent, mi amigo.',
+            MuchoAmigoSerializer.new(@mucho_amigo).serializable_hash[:data][:attributes])
+        }
+      else
+        format.json {
+          render_json_error(@mucho_amigo.errors.full_messages)
+        }
+      end
     end
   end
 
-  # def update
-  #   @mucho_amigo = MuchoAmigo.find(params[:id])
-  #   if @mucho_amigo.update(mucho_amigo_params)
-  #     render :update
-  #   else
-  #     render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
+  # PATCH /resource/:id
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+    if resource.update(account_params)
+      # Send confirmation instructions if the email was changed
+      resource.send_confirmation_instructions if resource.respond_to?(:send_confirmation_instructions)
+      bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
+      render json: {
+        status: { code: 200, message: 'Updated successfully. Confirmation instructions sent, mi amigo.' },
+        data: MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes]
+      }
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_to do |format|
+        format.json {
+          render json: {
+            status: { message: "This Amigo couldn't be updated successfully. #{resource.errors.full_messages.to_sentence}" }
+          }, status: :unprocessable_entity
+        }
+      end
+    end
+  end
 
+  # DELETE /mucho_amigos/:id
   def destroy
     @mucho_amigo = MuchoAmigo.find(params[:id])
-    if @mucho_amigo.delete
-      render :destroy
-    else
-      render json: { errors: @mucho_amigo.errors.full_messages }, status: :unprocessable_entity
-    end
+    @mucho_amigo.destroy
+    render json: { status: 'success', message: 'MuchoAmigo deleted successfully.' }, status: :ok
   end
 
+  # ASSOCIATED_PARTIES /mucho_amigos/:id
   def associated_parties
     amigo = MuchoAmigo.find(params[:id])
     associated_parties = amigo.mucho_parties
     render json: associated_parties
   end
 
+  # Parties Hosgted by an Amigo /mucho_amigos/:id
   def parties_by_this_amigo_as_host
     begin
       party_host = MuchoAmigo.find(params[:id])
@@ -71,6 +97,7 @@ class MuchoAmigosController < ApplicationController
     end
   end
 
+  # Locations Amogos is registered as host mucho_amigos/:id
   def locations_for_host
     begin
       mucho_amigo = MuchoAmigo.find(params[:id])
@@ -92,8 +119,8 @@ class MuchoAmigosController < ApplicationController
 
   private
 
-  def mucho_amigo_params
-    params.require(:mucho_amigo).permit(
+  def account_params
+    permitted_keys = [
       :full_name,
       :user_name,
       :email,
@@ -101,15 +128,30 @@ class MuchoAmigosController < ApplicationController
       :address,
       :street_number,
       :street_name,
-      :street_suffix, 
+      :street_suffix,
       :city,
-      :state_abbreviation, 
-      :country_code, 
+      :state_abbreviation,
+      :country_code,
       :postal_code,
-      :latitude, 
-      :longitude,
       :party_animal,
       :personal_bio
-    )
+    ]
+
+    puts "Received Parameters for Mucho Amigo: #{params.inspect}"
+  
+    params.permit(permitted_keys)
+  end
+
+  def respond_with(resource, _opts = {})
+    if resource.persisted?  # user is saved
+      render json: {
+        status: {code: 200, message: 'Signed up successfully.'},
+        data: MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes]
+      }
+    else  # user is not saved
+      render json: {
+        status: {message: "Amigo couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
+      }, status: :unprocessable_entity
+    end
   end
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'home/index', to: 'home#index'
   # Define a custom route for country_data
   get 'country_data', to: 'application#country_data'
-  get 'favicon.ico', to: 'application#images/favicon'
+  get 'favicon.ico', to: 'application#favicon'
   # put '/mucho_amigos/registrations/update', to: 'mucho_amigos/registrations#update', as: 'mucho_amigo_registration_path'
   root to: 'home#index'
 

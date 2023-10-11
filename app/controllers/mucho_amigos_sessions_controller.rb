@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MuchoAmigos::SessionsController < Devise::SessionsController
+class MuchoAmigosSessionsController < Devise::SessionsController
   include RackSessionsFix
   respond_to :html, :json
   # before_action :configure_sign_in_params, only: [:create]

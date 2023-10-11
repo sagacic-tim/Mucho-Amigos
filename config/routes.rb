@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   devise_for :mucho_amigos, controllers: {
-    registrations: 'mucho_amigos/registrations'
+    registrations: 'mucho_amigos',
+    sessions: 'mucho_amigos_sessions',
+    confirmations: 'mucho_amigos_confirmations',
+    omniauth_callbacks: 'mucho_amigos_omniauth_callbacks'
   }
 
   # This creates standard RESTful routes (index, show,

@@ -10,22 +10,22 @@ require "phonelib"
   # Also includes the JWT modules
   devise  :database_authenticatable, :registerable, :confirmable,
           :recoverable, :rememberable, :validatable, :jwt_authenticatable,
-          jwt_revocation_strategy: self, :omniauthable,
-          omniauth_providers: [:google_oauth2, :facebook, :github, :linkedin]
+          jwt_revocation_strategy: self#, :omniauthable,
+          # omniauth_providers: [:google_oauth2, :facebook, :github, :linkedin]
 
   # JWT Revocation strategy
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
   # OmniAuth authentication via Google, Facebook, Github
   # and LinkedIn (provider)
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |mucho_amigo|
-      mucho_amigo.email = auth.info.email
-      mucho_amigo.password = Devise.friendly_token[0, 20]
-      # You can set other attributes here based on the OmniAuth data.
-      # This is the minimum, and I may wish to collect more.
-    end
-  end
+  # def self.from_omniauth(auth)
+  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |mucho_amigo|
+  #     mucho_amigo.email = auth.info.email
+  #     mucho_amigo.password = Devise.friendly_token[0, 20]
+  #     # You can set other attributes here based on the OmniAuth data.
+  #     # This is the minimum, and I may wish to collect more.
+  #   end
+  # end
 
   # Each amigo can be a guest at a party so MuchoAmigo
   # can have many guests. Since each guest can attend

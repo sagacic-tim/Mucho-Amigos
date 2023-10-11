@@ -2,14 +2,14 @@ require "application_responder"
 require 'action_controller'
 # protect_from_forgery with: :exception
 
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Api
   include ActionController::MimeResponds
   include ActionView::Layouts
   include ActionController::Flash
   include ActionController::Helpers
 
   self.responder = ApplicationResponder
-  respond_to :html
+  respond_to :json
 
   # code shared between application_conbtroller and registrations_controller
   helper_method :generate_country_data

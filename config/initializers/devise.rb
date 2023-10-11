@@ -29,11 +29,11 @@ Devise.setup do |config|
   config.scoped_views = true
   config.default_scope = :mucho_amigo
   config.router_name = :mucho_amigo
-  config.omniauth_path_prefix = "/auth"
-  config.omniauth :google_oauth2, 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', scope: 'email,profile'
-  config.omniauth :facebook, 'FACEBOOK_APP_ID', 'FACEBOOK_APP_SECRET', scope: 'email', info_fields: 'email,name'
-  config.omniauth :github, 'GITHUB_KEY', 'GITHUB_SECRET', scope: 'user:email'
-  config.omniauth :linkedin, 'LINKEDIN_KEY', 'LINKEDIN_SECRET', scope: 'r_liteprofile r_emailaddress'
+  # config.omniauth_path_prefix = "/auth"
+  # config.omniauth :google_oauth2, 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', scope: 'email,profile'
+  # config.omniauth :facebook, 'FACEBOOK_APP_ID', 'FACEBOOK_APP_SECRET', scope: 'email', info_fields: 'email,name'
+  # config.omniauth :github, 'GITHUB_KEY', 'GITHUB_SECRET', scope: 'user:email'
+  # config.omniauth :linkedin, 'LINKEDIN_KEY', 'LINKEDIN_SECRET', scope: 'r_liteprofile r_emailaddress'
   # config.responder.error_status = :unprocessable_entity
   # config.responder.redirect_status = :see_other
 

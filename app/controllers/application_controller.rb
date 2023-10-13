@@ -2,7 +2,7 @@ require "application_responder"
 require 'action_controller'
 # protect_from_forgery with: :exception
 
-class ApplicationController < ActionController::Api
+class ApplicationController < ActionController::API
   include ActionController::MimeResponds
   include ActionView::Layouts
   include ActionController::Flash

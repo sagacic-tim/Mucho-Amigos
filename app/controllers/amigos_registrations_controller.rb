@@ -1,11 +1,12 @@
-class MuchoAmigosController < Devise::RegistrationsController
+# puts $LOAD_PATH
+# puts "Current ancestors: #{ancestors.inspect}"
+
+require "#{Rails.root}/app/helpers/json_response_helper"
+
+class AmigosRegistrationsController < Devise::RegistrationsController
   respond_to :json
   include JsonResponseHelper
-  # this runs devise authentication before other methods
-  devise :database_authenticatable, :registerable, :confirmable,
-  :recoverable, :rememberable, :validatable, :jwt_authenticatable,
-  jwt_revocation_strategy: self#, :omniauthable,
-  # omniauth_providers: [:google_oauth2, :facebook, :github, :linkedin]
+
   before_action :authenticate_mucho_amigo!,
                 :account_params, only: [:create, :update]
 
@@ -23,6 +24,7 @@ class MuchoAmigosController < Devise::RegistrationsController
 
   # POST /resource/
   def create
+    debugger
     @mucho_amigo = MuchoAmigo.new(account_params)
 
     respond_to do |format|
@@ -156,4 +158,4 @@ class MuchoAmigosController < Devise::RegistrationsController
       }, status: :unprocessable_entity
     end
   end
-end
+end 

@@ -2,9 +2,10 @@ require 'bigdecimal'
 require "email_validator"
 require "phonelib"
 
-  # Each MuchoAmigo can attend many parties, through the MuchoGuest join table
+# Each MuchoAmigo can attend many parties, through the MuchoGuest join table
   
-  class MuchoAmigo < ApplicationRecord
+class MuchoAmigo < ApplicationRecord
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable, :omniauthable
   # Also includes the JWT modules

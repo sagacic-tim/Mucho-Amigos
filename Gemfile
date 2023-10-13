@@ -1,6 +1,18 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+# Devise is a flexible authentication solution for Rails based on
+# Warden. It:
+#   Is Rack based;
+#   Is a complete MVC solution based on Rails engines;
+#   Allows you to have multiple models signed in at the same time;
+#   Is based on a modularity concept: use only what you really need.
+gem 'devise', '~> 4.9', '>= 4.9.2'
+
+# devise-jwt is a Devise extension which uses JWT tokens for user
+# authentication. It follows secure by default principle.
+gem 'devise-jwt', '~> 0.11.0'
+
 ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -92,18 +104,6 @@ gem 'bigdecimal', '~> 3.1', '>= 3.1.4'
 # handling and bindings for stack frames among other things and
 # it comes with an easy to use command line interface.
 gem 'byebug', '~> 11.1', '>= 11.1.3'
-
-# Devise is a flexible authentication solution for Rails based on
-# Warden. It:
-#   Is Rack based;
-#   Is a complete MVC solution based on Rails engines;
-#   Allows you to have multiple models signed in at the same time;
-#   Is based on a modularity concept: use only what you really need.
-gem 'devise', '~> 4.9', '>= 4.9.2'
-
-# devise-jwt is a Devise extension which uses JWT tokens for user
-# authentication. It follows secure by default principle.
-gem 'devise-jwt', '~> 0.11.0'
 
 # OmniAuth is a library that standardizes multi-provider
 # authentication for web applications. It was created to

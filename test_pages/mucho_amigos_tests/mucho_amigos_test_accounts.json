@@ -1,0 +1,67 @@
+{
+    "mucho_amigos":{
+        "full_name": "Timothy Michel",
+        "user_name": "tmichel",
+        "email": "tmichel@sagacicweb.com",
+        "password": "abcd1234%^&*",
+        "password_confirmation": "abcd1234%^&*",
+        "phone": "+16264833220",
+        "address": "1404 Rodney Rd, West Covina, CA 91792, US",
+        "street_number": "1404",
+        "street_name": "Rodney",
+        "street_suffix": "Rd",
+        "city": "West Covina",
+        "state_abbreviation": "CA",
+        "country_code": "US",
+        "postal_code": "91792",
+        "latitude": "34.03501",
+        "longitude": "-117.91432",
+        "party_animal": true,
+        "personal_bio": "love to party every night until dawn and then sleep all day"
+    }
+}
+{
+    "mucho_amigos":{
+        "full_name": "Ryan Alexsnder Acosta",
+        "user_name": "ryan.acosta",
+        "email": "ryanalexanderacosta@icloud.com",
+        "password": "abcd1234%^&*",
+        "password_confirmation": "abcd1234%^&*",
+        "phone": "+16262838080",
+        "address": "1541 Inverness Dr, Pasadena, CA 91103, US",
+        "street_number": "1541",
+        "street_name": "Inverness",
+        "street_suffix": "Dr",
+        "city": "Pasadena",
+        "state_abbreviation": "CA",
+        "country_code": "US",
+        "postal_code": "91103",
+        "latitude": "34.17929",
+        "longitude": "-118.17796",
+        "party_animal": false,
+        "personal_bio": "I like to party every day from dawn til midnight. I can never get enough of partying. When I sleep I dream of partying."
+    }
+}
+{
+    "mucho_amigos":{
+        "id": 9,
+        "full_name": "Arturo Ayon",
+        "user_name": "art.ayon",
+        "email": "aaayon91@gmail.com",
+        "password": "abcd1234%^&*",
+        "password_confirmation": "abcd1234%^&*",
+        "phone": "+16268936304",
+        "address": "15325 Moccasin St, La Puente, CA 91744, US",
+        "street_number": "15325",
+        "street_name": "Moccasin",
+        "street_suffix": "St",
+        "city": "La Puente",
+        "state_abbreviation": "CA",
+        "country_code": "US",
+        "postal_code": "91744",
+        "latitude": "34.0298",
+        "longitude": "-117.95833",
+        "party_animal": true,
+        "personal_bio": "I like to party every day from dawn til midnight especially on sports nights. I can never get enough of partying when hte games are playing. When I sleep I dream of partying at all the football games, all night long."
+    }
+}

@@ -6,20 +6,24 @@ class MuchoAmigosSessionsController < Devise::SessionsController
 
   # before_action :configure_sign_in_params, only: [:create]
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
-
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    @mucho_amigo = MuchoAmigo.find_by_email(params[:email])
+    
+    if @mucho_amigo&.valid_password?(params[:password])
+      sign_in(@mucho_amigo)
+      respond_with @mucho_amigo, location: after_sign_in_path_for(@mucho_amigo)
+    else
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
+    end
+  end
+
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    respond_to_on_destroy(signed_out)
+  end
 
   # protected
 
@@ -43,15 +47,17 @@ class MuchoAmigosSessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+  
     respond_to do |format|
       format.html { redirect_to after_sign_out_path_for(resource_name) }
       format.json do
         begin
           jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last,
-                                    Rails.application.credentials.devise_jwt_secret_key!).first
+          Rails.application.credentials.devise_jwt_secret_key!).first
           current_amigo = MuchoAmigo.find(jwt_payload['sub'])
-
-          if current_amigo
+  
+          if signed_out
             render json: {
               status: 200,
               message: 'Logged out successfully.'
@@ -80,5 +86,5 @@ class MuchoAmigosSessionsController < Devise::SessionsController
         end
       end
     end
-  end
+  end  
 end

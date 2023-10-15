@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p style="font-size: 16px; color: #333;">Hello <%= @resource.full_name %>!</p>
+    <p style="font-size: 14px; color: #666;">
+      We've recently received a request to change your email address. If you initiated this change, you can disregard this message.
+      If you didn't request this change, please contact our support team immediately.
+    </p>
+
+    <% if @resource.try(:unconfirmed_email?) %>
+      <p style="font-size: 14px; color: #666;">We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
+      <p style="font-size: 14px; color: #666;">Your current email is being changed to <%= @resource.email %>.</p>
+    <% else %>
+      <p style="font-size: 14px; color: #666;">We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
+    <% end %>
+    <p style="font-size: 14px; color: #666;">
+      Visit your account settings to review and confirm the email change:
+      <a href="<%= confirmation_url %>" style="color: #007BFF; text-decoration: underline;">Confirm Email Change</a>
+    </p>
+  </body>
+</html>

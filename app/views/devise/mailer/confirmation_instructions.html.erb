@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h1>Confirmation instructions</h1>
+
+  <p>Hello <%= @resource.email %>!</p>
+
+  <p>You can confirm your account email through the link below:</p>
+
+  <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+  <p>If you didn't create an account, please ignore this email.</p>
+</body>
+</html>

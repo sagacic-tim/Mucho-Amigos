@@ -9,26 +9,31 @@ Rails.application.routes.draw do
     # omniauth_callbacks: 'mucho_amigos_omniauth_callbacks'
   }
 
+  devise_scope :mucho_amigo do
+    # Devise registration routes
+    resources :mucho_amigos,
+      only: [:index, :show, :create, :update, :destroy],
+      controller: 'amigos_registrations',
+      defaults: { format: 'json' } do
+        member do
+          get 'associated_parties'
+          get 'parties_by_this_amigo_as_host'
+          get 'locations_for_host'
+        end
+      end
+  
+    # Custom sessions routes
+    post '/mucho_amigos/sign_in', to: 'mucho_amigos_sessions#create'
+    delete '/mucho_amigos/sign_out', to: 'mucho_amigos_sessions#destroy'
+    # ... other custom routes as needed ...
+  end
+
   get 'mucho_welcome/index', to: 'home#index'
   get 'home/index', to: 'home#index'
   # Define a custom route for country_data
   get 'country_data', to: 'application#country_data'
   get 'favicon.ico', to: 'application#favicon'
   root to: 'home#index'
-
-  # Specify the controller name without "_controller"
-  devise_scope :mucho_amigo do
-    resources :mucho_amigos,
-    only: [:index, :show, :create, :update, :destroy],
-    controller: 'amigos_registrations',  # Check if this matches your actual controller name
-    defaults: { format: 'json' } do
-      member do
-        get 'associated_parties'
-        get 'parties_by_this_amigo_as_host'
-        get 'locations_for_host'
-      end
-    end
-  end
 
   # This creates standard RESTful routes (index, show,
   # create, update, and destroy). Specifying 'json format

@@ -12,7 +12,8 @@ Devise.setup do |config|
 
   require 'devise/orm/active_record'
 
-  config.mailer_sender = 'tmichel@sagacicweb.com'  # Replace with your own email address
+  config.mailer = 'Devise::Mailer'
+  config.mailer_sender = 'tmichel@sagacicweb.com'
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
   config.skip_session_storage = [:http_auth]
@@ -24,8 +25,6 @@ Devise.setup do |config|
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
   config.reset_password_within = 6.hours
   config.navigational_formats = []
-  config.sign_out_via = :delete
-  config.sign_out_via = :delete
   config.scoped_views = true
   config.default_scope = :mucho_amigo
   config.router_name = :mucho_amigo

@@ -24,7 +24,6 @@ class AmigosRegistrationsController < Devise::RegistrationsController
 
   # POST /resource/
   def create
-    debugger
     @mucho_amigo = MuchoAmigo.new(account_params)
 
     respond_to do |format|
@@ -72,6 +71,13 @@ class AmigosRegistrationsController < Devise::RegistrationsController
   # DELETE /mucho_amigos/:id
   def destroy
     @mucho_amigo = MuchoAmigo.find(params[:id])
+
+    # Check authentication
+    authenticate_mucho_amigo!
+
+    # Check authorization
+    authorize_user
+
     @mucho_amigo.destroy
     render json: { status: 'success', message: 'MuchoAmigo deleted successfully.' }, status: :ok
   end
@@ -128,6 +134,8 @@ class AmigosRegistrationsController < Devise::RegistrationsController
       :full_name,
       :user_name,
       :email,
+      :password,
+      :password_confirmation,
       :phone,
       :address,
       :street_number,
@@ -140,10 +148,9 @@ class AmigosRegistrationsController < Devise::RegistrationsController
       :party_animal,
       :personal_bio
     ]
-
-    puts "Received Parameters for Mucho Amigo: #{params.inspect}"
   
-    params.permit(permitted_keys)
+    # Permit nested attributes for mucho_amigo
+    params.require(:mucho_amigo).permit(permitted_keys)
   end
 
   def respond_with(resource, _opts = {})
@@ -156,6 +163,13 @@ class AmigosRegistrationsController < Devise::RegistrationsController
       render json: {
         status: {message: "Amigo couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
       }, status: :unprocessable_entity
+    end
+  end
+
+  def authorize_user
+    # Check if the current user is authorized to delete the MuchoAmigo
+    unless current_mucho_amigo == @mucho_amigo
+      render json: { error: "You are not authorized to delete this MuchoAmigo." }, status: :forbidden
     end
   end
 end 

@@ -69,4 +69,14 @@ Rails.application.configure do
   # environment file
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  # segt up hte smtp server information.
+  config.action_mailer.smtp_settings = {
+    address: 'mail.sagacicweb.com',
+    port: 587,
+    domain: 'sagacicweb.com',
+    user_name: 'tmichel@sagacicweb.com',
+    password: 'jki8&^8(65GtBHgG5$3Sd',
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end

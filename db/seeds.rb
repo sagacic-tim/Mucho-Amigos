@@ -29,9 +29,9 @@ mucho_amigo_1 = MuchoAmigo.create!(
   longitude: "",
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
+  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
+  confirmed_at: Time.current
 )
-mucho_amigo_1.send_confirmation_instructions
 mucho_amigo_2 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
   user_name: Faker::Internet.username,
@@ -50,9 +50,9 @@ mucho_amigo_2 = MuchoAmigo.create!(
   longitude: "",
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
+  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
+  confirmed_at: Time.current
 )
-mucho_amigo_2.send_confirmation_instructions
 mucho_amigo_3 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
   user_name: Faker::Internet.username,
@@ -71,9 +71,9 @@ mucho_amigo_3 = MuchoAmigo.create!(
   longitude: "",
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
+  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
+  confirmed_at: Time.current
 )
-mucho_amigo_3.send_confirmation_instructions
 mucho_amigo_4 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
   user_name: Faker::Internet.username,
@@ -92,31 +92,10 @@ mucho_amigo_4 = MuchoAmigo.create!(
   longitude: "",
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
+  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
+  confirmed_at: Time.current
 )
-mucho_amigo_4.send_confirmation_instructions
 mucho_amigo_5 = MuchoAmigo.create!(
-  full_name: Faker::Name.unique.name,
-  user_name: Faker::Internet.username,
-  email: "mucho.amigo.5@sagacicweb.com",
-  password: "abcd1234%^&*",
-  password_confirmation: "abcd1234%^&*",
-  address: "",
-  street_number: "821", 
-  street_name: "S 11th",
-  street_suffix: "Dr", 
-  city: "Show Low",
-  state_abbreviation: "AZ", 
-  country_code: "US",
-  postal_code: "85901",
-  latitude: "", 
-  longitude: "",
-  phone: Faker::PhoneNumber.unique.cell_phone,
-  party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
-)
-mucho_amigo_5.send_confirmation_instructions
-mucho_amigo_6 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
   user_name: Faker::Internet.username,
   email: "mucho.amigo.6@sagacicweb.com",
@@ -134,9 +113,10 @@ mucho_amigo_6 = MuchoAmigo.create!(
   longitude: "",
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
-  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true)
+  personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
+  confirmed_at: Time.current
 )
-mucho_amigo_6.send_confirmation_instructions
+
 location_1 = MuchoLocation.create!(
   location_name: "Native Fields",
   location_description: "Native Fields is owned by sisters, Chef Cat Castaneda and Christine Cornwell. The restaurant is in honor of their late father, Marcel Castaneda, who passed away from cancer in 2016. Native Fields opened two years later in 2018.\nChef Cat is a graduate of the Culinary Institute of America. Returning to Los Angeles from New York, she worked with her mentor and James Beard award winner, Suzanne Goin at fine dining establishments Lucques and a.o.c. Cat also helped to open Silverlake’s first organic fast-casual restaurant, Forage.\nChef Cat is a benefactor of an organic farm at Cal Poly Pomona where she teaches students and harvests produce for her restaurant. On a grander scale, she also feeds seniors and families through organizations like YWCA.",
@@ -310,7 +290,7 @@ party_6 = MuchoParty.create!(
   party_date: "2023-11-27",
   party_time: "2023-11-27T01:00:00.000-07:00",
   party_location_id: location_7.id,
-  party_host_id: mucho_amigo_6.id,
+  party_host_id: mucho_amigo_1.id,
 )
 
 party_7 = MuchoParty.create!(
@@ -347,12 +327,12 @@ MuchoGuest.create!(
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_6.id,
+  amigo_id: mucho_amigo_4.id,
   party_id: party_3.id
 )
 
 MuchoGuest.create!(
-  amigo_id: mucho_amigo_6.id,
+  amigo_id: mucho_amigo_4.id,
   party_id: party_4.id
 )
 

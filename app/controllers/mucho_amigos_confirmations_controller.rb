@@ -13,6 +13,7 @@ class MuchoAmigosConfirmationsController < Devise::ConfirmationsController
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
+    @resource = resource_class.confirm_by_token(params[:confirmation_token])
     super
   end
 

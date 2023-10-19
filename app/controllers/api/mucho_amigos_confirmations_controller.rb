@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MuchoAmigosConfirmationsController < Devise::ConfirmationsController
+class Api::MuchoAmigosConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation/new
   def new
     super

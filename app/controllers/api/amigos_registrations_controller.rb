@@ -3,7 +3,7 @@
 
 require "#{Rails.root}/app/helpers/json_response_helper"
 
-class AmigosRegistrationsController < Devise::RegistrationsController
+class Api::AmigosRegistrationsController < Devise::RegistrationsController
   respond_to :json
   include JsonResponseHelper
 

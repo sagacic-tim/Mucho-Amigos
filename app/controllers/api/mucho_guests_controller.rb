@@ -1,4 +1,4 @@
-class MuchoGuestsController < ApplicationController
+class Api::MuchoGuestsController < ApplicationController
   def index
     @mucho_guests = MuchoGuest.all
     render :index

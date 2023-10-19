@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MuchoAmigosSessionsController < Devise::SessionsController
+class Api::MuchoAmigosSessionsController < Devise::SessionsController
   include RackSessionsFix
   respond_to :json
 

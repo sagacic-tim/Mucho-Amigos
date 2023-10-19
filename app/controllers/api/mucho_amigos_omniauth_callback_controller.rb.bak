@@ -1,6 +1,6 @@
 # app/controllers/mucho_amigos_omniauth_callbacks_controller.rb
 
-class MuchoAmigosOmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Api::MuchoAmigosOmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     handle_callback('google')
   end

@@ -1,4 +1,4 @@
-class MuchoLocationsController < ApplicationController
+class Api::MuchoLocationsController < ApplicationController
   def index
     @mucho_locations = MuchoLocation.all
     render :index

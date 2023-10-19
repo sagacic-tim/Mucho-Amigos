@@ -1,4 +1,4 @@
-class MuchoPartiesController < ApplicationController
+class Api::MuchoPartiesController < ApplicationController
   before_action :set_mucho_party, only: [:show, :update, :destroy]
 
   def index

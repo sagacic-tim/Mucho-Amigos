@@ -1,6 +1,3 @@
-# puts $LOAD_PATH
-# puts "Current ancestors: #{ancestors.inspect}"
-
 require "#{Rails.root}/app/helpers/json_response_helper"
 
 class Api::AmigosRegistrationsController < Devise::RegistrationsController
@@ -9,6 +6,12 @@ class Api::AmigosRegistrationsController < Devise::RegistrationsController
 
   before_action :authenticate_mucho_amigo!,
                 :account_params, only: [:create, :update]
+  before_action :set_devise_mapping, except: [:new, :edit]
+
+  # Explicitly set Devise mapping
+  def set_devise_mapping
+    request.env['devise.mapping'] = Devise.mappings[:mucho_amigo]
+  end
 
   # List all Amigos
   def index

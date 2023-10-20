@@ -23,4 +23,4 @@ class Api::CountriesRegionsController < ApplicationController
       render json: { error: e.message }, status: :internal_server_error
     end
   end
-enabled
+end

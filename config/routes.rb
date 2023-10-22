@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
 
-    devise_for :mucho_amigos, controllers: {
-      registrations: 'amigos_registrations',
+    devise_for :mucho_amigos, path: '', path_names: {
+      sign_in: 'login',
+      sign_out: 'logout',
+      registration: 'signup'
+    }, controllers: {
+      registrations: 'mucho_amigos_registrations',
       sessions: 'mucho_amigos_sessions',
       confirmations: 'mucho_amigos_confirmations',
       passwords: 'mucho_amigos_passwords'
@@ -10,18 +14,15 @@ Rails.application.routes.draw do
 
     devise_scope :mucho_amigo do
       resources :mucho_amigos, except: [:new, :edit],
-        controller: 'amigos_registrations',
-        defaults: { format: 'json' } do
+      controller: 'mucho_amigos_registrations',
+      defaults: { format: 'json' } do
         member do
           get 'associated_parties'
           get 'parties_by_this_amigo_as_host'
           get 'locations_for_host'
         end
+        get '/api/mucho_amigos', to: 'api/mucho_amigos_registrations#index'
       end
-
-      post '/mucho_amigos/sign_in', to: 'mucho_amigos_sessions#create'
-      delete '/mucho_amigos/sign_out', to: 'mucho_amigos_sessions#destroy'
-      # ... other custom routes as needed ...
     end
 
     resources :mucho_parties, except: [:new, :edit], defaults: { format: 'json' } do
@@ -48,8 +49,7 @@ Rails.application.routes.draw do
 
     resources :countries_regions, only: [:index]
     get 'country_data', to: 'countries_regions#country_data'
-    get 'favicon.ico', to: 'application#favicon'
 
-    get '*path', to: 'home#index', via: :all
+    # get '*path', to: 'home#index', via: :all
   end
 end

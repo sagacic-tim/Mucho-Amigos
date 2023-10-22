@@ -1,6 +1,14 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby "3.2.2"
+
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.0.7"
+
+# Use postgresql as the database for Active Record
+gem 'pg', '~> 1.5', '>= 1.5.3'
+
 # Devise is a flexible authentication solution for Rails based on
 # Warden. It:
 #   Is Rack based;
@@ -13,13 +21,44 @@ gem 'devise', '~> 4.9', '>= 4.9.2'
 # authentication. It follows secure by default principle.
 gem 'devise-jwt', '~> 0.11.0'
 
-ruby "3.2.2"
+# A fast JSON:API serializer for Ruby Objects.
+# Declaration syntax similar to Active Model Serializer
+# Support for belongs_to, has_many and has_one
+# Support for compound documents (included)
+# Optimized serialization of compound documents
+# Caching
+gem 'jsonapi-serializer', '~> 2.2'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.7"
+# OmniAuth is a library that standardizes multi-provider
+# authentication for web applications. It was created to
+# be powerful, flexible, and do as little as possible. Any
+# developer can create strategies for OmniAuth that can
+# authenticate users via disparate systems. OmniAuth strat-
+# egies have been created for everything from Facebook to LDAP.
+gem 'omniauth', '~> 2.1', '>= 2.1.1'
 
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 1.5', '>= 1.5.3'
+# Strategy to authenticate with Google via OAuth2 in OmniAuth.
+gem 'omniauth-google-oauth2', '~> 1.1', '>= 1.1.1'
+
+# Supports OAuth 2.0 server-side and client-side flows.
+# A secure, fast, and convenient way for users to log into
+# your app, and for your app to ask for permissions to access
+# data
+gem 'omniauth-facebook', '~> 9.0'
+
+# This is the official OmniAuth strategy for authenticating to
+# GitHub. To use it, you'll need to sign up for an OAuth2
+# Application ID and Secret on the GitHub Applications Page.
+gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
+
+# A LinkedIn OAuth2 strategy for OmniAuth. OpenID Connect (OIDC)
+# is an identity layer built on top of OAuth 2.0, enabling
+# applications to authenticate members and obtain lite profile
+# information about the member. OIDC will simplify the partner
+# integration onboarding experience and eliminate dependencies
+# on making additional API calls to find who the authenticated
+# member is.
+gem 'omniauth-linkedin-oauth2', '~> 1.0', '>= 1.0.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 6.3'
@@ -104,45 +143,6 @@ gem 'bigdecimal', '~> 3.1', '>= 3.1.4'
 # handling and bindings for stack frames among other things and
 # it comes with an easy to use command line interface.
 gem 'byebug', '~> 11.1', '>= 11.1.3'
-
-# OmniAuth is a library that standardizes multi-provider
-# authentication for web applications. It was created to
-# be powerful, flexible, and do as little as possible. Any
-# developer can create strategies for OmniAuth that can
-# authenticate users via disparate systems. OmniAuth strat-
-# egies have been created for everything from Facebook to LDAP.
-gem 'omniauth', '~> 2.1', '>= 2.1.1'
-
-# Strategy to authenticate with Google via OAuth2 in OmniAuth.
-gem 'omniauth-google-oauth2', '~> 1.1', '>= 1.1.1'
-
-# Supports OAuth 2.0 server-side and client-side flows.
-# A secure, fast, and convenient way for users to log into
-# your app, and for your app to ask for permissions to access
-# data
-gem 'omniauth-facebook', '~> 9.0'
-
-# This is the official OmniAuth strategy for authenticating to
-# GitHub. To use it, you'll need to sign up for an OAuth2
-# Application ID and Secret on the GitHub Applications Page.
-gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
-
-# A LinkedIn OAuth2 strategy for OmniAuth. OpenID Connect (OIDC)
-# is an identity layer built on top of OAuth 2.0, enabling
-# applications to authenticate members and obtain lite profile
-# information about the member. OIDC will simplify the partner
-# integration onboarding experience and eliminate dependencies
-# on making additional API calls to find who the authenticated
-# member is.
-gem 'omniauth-linkedin-oauth2', '~> 1.0', '>= 1.0.1'
-
-# A fast JSON:API serializer for Ruby Objects.
-# Declaration syntax similar to Active Model Serializer
-# Support for belongs_to, has_many and has_one
-# Support for compound documents (included)
-# Optimized serialization of compound documents
-# Caching
-gem 'jsonapi-serializer', '~> 2.2'
 
 # A set of responders modules to dry up your Rails app.
 gem 'responders', '~> 3.0', '>= 3.0.1'

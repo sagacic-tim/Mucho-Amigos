@@ -1,6 +1,7 @@
 require "#{Rails.root}/app/helpers/json_response_helper"
 
-class Api::AmigosRegistrationsController < Devise::RegistrationsController
+class Api::MuchoAmigosRegistrationsController < ApplicationController
+  skip_before_action :authenticate_mucho_amigo!, only: [:index, :show]
   respond_to :json
   include JsonResponseHelper
 

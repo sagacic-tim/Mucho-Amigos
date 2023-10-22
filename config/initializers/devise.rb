@@ -9,50 +9,12 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-
-  require 'devise/orm/active_record'
-
-  config.mailer = 'Devise::Mailer'
-  config.mailer = 'MuchoAmigoMailer'
-  config.mailer_sender = 'tmichel@sagacicweb.com'
-  config.case_insensitive_keys = [:email]
-  config.strip_whitespace_keys = [:email]
-  config.skip_session_storage = [:http_auth]
-  config.stretches = Rails.env.test? ? 1 : 12
-  config.reconfirmable = true
-  config.confirmation_keys = [:email]
-  config.expire_all_remember_me_on_sign_out = true
-  config.password_length = 10..128
-  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
-  config.reset_password_within = 6.hours
-  config.navigational_formats = []
-  config.scoped_views = true
-  config.default_scope = :mucho_amigo
-  config.router_name = :mucho_amigo
-  # config.omniauth_path_prefix = "/auth"
-  # config.omniauth :google_oauth2, 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', scope: 'email,profile'
-  # config.omniauth :facebook, 'FACEBOOK_APP_ID', 'FACEBOOK_APP_SECRET', scope: 'email', info_fields: 'email,name'
-  # config.omniauth :github, 'GITHUB_KEY', 'GITHUB_SECRET', scope: 'user:email'
-  # config.omniauth :linkedin, 'LINKEDIN_KEY', 'LINKEDIN_SECRET', scope: 'r_liteprofile r_emailaddress'
-  # config.responder.error_status = :unprocessable_entity
-  # config.responder.redirect_status = :see_other
-
-  config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
-    jwt.dispatch_requests = [['POST', %r{^/login$}]]
-    jwt.revocation_requests = [['DELETE', %r{^/logout$}]]
-    jwt.expiration_time = 30.minutes.to_i
-  end
-end
-
-# ...
-
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ae85cc5d5fa39d5af58bbe0b76af37ffc875dc87b29e31dcf8ee5fe250ad3a1fb5040b5d38540339df4c2d15abd08f4363320e96a789ba7b39ee0e1d59d8feed'
+  # config.secret_key = '9b0a3cd8960fb16cb2b2cbee184e66219f25b8ca200651e319ef46d8377fb197f6eec38a8d385609de73af0cd528181e4834bac3014a4c1cfefe7e0e02297460'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -62,7 +24,8 @@ end
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  
+  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
@@ -73,7 +36,7 @@ end
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  # require 'devise/orm/active_record'
+  require 'devise/orm/active_record'
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -95,12 +58,12 @@ end
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  # config.case_insensitive_keys = [:email]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  # config.strip_whitespace_keys = [:email]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -134,7 +97,7 @@ end
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  # config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [:http_auth]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -160,10 +123,10 @@ end
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  # config.stretches = Rails.env.test? ? 1 : 12
+  config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '55a2da8ffa21ac9671b66a803ba8cd8d52338c357c27e6fb4e59c9bdd63273c4bfe0e202c35eb46b19a03f501cec90644a56c138b4d13473f6cc7e7bc07a1c5b'
+  # config.pepper = 'ebae2e88908ec40d938285ff8c481400d78bdb8671c5a8378e85c3c2d04cff16d8bccd5c8f13e32b76359bd7206a0807847c144fa1ca03ce8d1b07743b083bc2'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -194,7 +157,7 @@ end
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
   # unconfirmed_email column, and copied to email column on successful confirmation.
-  # config.reconfirmable = true
+  config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]
@@ -204,7 +167,7 @@ end
   # config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
-  # config.expire_all_remember_me_on_sign_out = true
+  config.expire_all_remember_me_on_sign_out = true
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
@@ -215,12 +178,12 @@ end
 
   # ==> Configuration for :validatable
   # Range for password length.
-  # config.password_length = 10..128
+  config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
-  # config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
+  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -261,7 +224,7 @@ end
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
-  # config.reset_password_within = 6.hours
+  config.reset_password_within = 6.hours
 
   # When set to false, does not sign a user in automatically after their password is
   # reset. Defaults to true, so a user is signed in automatically after a reset.
@@ -300,10 +263,10 @@ end
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = []
+  # config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  # config.sign_out_via = :delete
+  config.sign_out_via = :delete
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -336,20 +299,15 @@ end
   # ==> Hotwire/Turbo configuration
   # When using Devise with Hotwire/Turbo, the http status for error responses
   # and some redirects must match the following. The default in Devise for existing
-  # apps is `200 OK` and `302 Found respectively`, but new apps are generated with
+  # apps is `200 OK` and `302 Found` respectively, but new apps are generated with
   # these new defaults that match Hotwire/Turbo behavior.
   # Note: These might become the new default in future versions of Devise.
-  # config.responder.error_status = :unprocessable_entity
-  # config.responder.redirect_status = :see_other
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
 
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-
-  # Specify that on every login POST request it should append
-  # the JWT token to the ‘Authorization’ header as “Bearer +
-  # token” when there’s a successful response sent back, and on
-  # a logout DELETE request, the token should be revoked.
-# end
+end

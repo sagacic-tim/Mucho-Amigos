@@ -25,6 +25,17 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name avatar])
   end
 
+  def authenticate_mucho_amigo!
+    unless current_mucho_amigo
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
+  end
+  
+  def current_mucho_amigo
+    @current_mucho_amigo ||= MuchoAmigo.find_by(id: session[:mucho_amigo_id]) if session[:mucho_amigo_id]
+  end
+  helper_method :current_mucho_amigo
+
   private
 
   # Handle parameter parse errors

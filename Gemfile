@@ -9,6 +9,10 @@ gem "rails", "~> 7.0.7"
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.5', '>= 1.5.3'
 
+# Shim to load environment variables from .env into ENV in development.
+# dotenv loads variables from a .env file into ENV when the environment is bootstrapped
+gem 'dotenv', '~> 2.8', '>= 2.8.1'
+
 # Devise is a flexible authentication solution for Rails based on
 # Warden. It:
 #   Is Rack based;

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :mucho_amigos
   namespace :api, defaults: { format: 'json' } do
 
     devise_for :mucho_amigos, path: '', path_names: {

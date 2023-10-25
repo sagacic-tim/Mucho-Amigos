@@ -1,13 +1,13 @@
 require "#{Rails.root}/app/helpers/json_response_helper"
 
 class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
-  skip_before_action :authenticate_mucho_amigo!, only: [:index, :show]
   respond_to :json
   include JsonResponseHelper
 
-  before_action :authenticate_mucho_amigo!,
-   :account_params, only: [:create, :update]
+  before_action :authenticate_mucho_amigo!, except: [:index, :show, :create]
+  #before_action :account_params, only: [:create, :update]
   before_action :set_devise_mapping, except: [:new, :edit, :index, :show]
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   # Explicitly set Devise mapping
   def set_devise_mapping
@@ -30,21 +30,17 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
   def create
     super do |resource|
       if resource.persisted?
-        respond_to do |format|
-          format.json {
-            render_json_success('Registration successful, mi amigo.',
-              MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes])
-          }
-        end
+        render_json_success('Registration successful, mi amigo.',
+            MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes])
+        return
       else
-        respond_to do |format|
-          format.json {
-            render_json_error(resource.errors.full_messages)
-          }
-        end
+        render_json_error(resource.errors.full_messages)
+        return
       end
     end
   end
+  
+  
 
   # PATCH /resource/:id
   def update
@@ -71,9 +67,6 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
   # DELETE /mucho_amigos/:id
   def destroy
     @mucho_amigo = MuchoAmigo.find(params[:id])
-
-    # Check authentication
-    authenticate_mucho_amigo!
 
     # Check authorization
     authorize_user
@@ -127,10 +120,10 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
     end
   end
 
-  private
+  protected
 
-  def account_params
-    permitted_keys = [
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [
       :full_name,
       :user_name,
       :email,
@@ -147,11 +140,34 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
       :postal_code,
       :party_animal,
       :personal_bio
-    ]
-  
-    # Permit nested attributes for mucho_amigo
-    params.require(:mucho_amigo).permit(permitted_keys)
+    ])
   end
+
+  private
+
+  # def account_params
+  #   permitted_keys = [
+  #     :full_name,
+  #     :user_name,
+  #     :email,
+  #     :password,
+  #     :password_confirmation,
+  #     :phone,
+  #     :address,
+  #     :street_number,
+  #     :street_name,
+  #     :street_suffix,
+  #     :city,
+  #     :state_abbreviation,
+  #     :country_code,
+  #     :postal_code,
+  #     :party_animal,
+  #     :personal_bio
+  #   ]
+  
+  #   # Permit nested attributes for mucho_amigo
+  #   params.require(:mucho_amigo).permit(permitted_keys)
+  # end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?  # user is saved
@@ -170,6 +186,7 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
     # Check if the current user is authorized to delete the MuchoAmigo
     unless current_mucho_amigo == @mucho_amigo
       render json: { error: "You are not authorized to delete this MuchoAmigo." }, status: :forbidden
+      return
     end
   end
 end 

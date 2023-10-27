@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Api::MuchoAmigosSessionsController < Devise::SessionsController
-  include RackSessionsFix
+  # include RackSessionsFix
   respond_to :json
 
-  # before_action :configure_sign_in_params, only: [:create]
+  # before_action :configure_sign_in_params, only: [:create, :destroy]
 
   # POST /resource/sign_in
   def create
@@ -21,7 +21,6 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
     respond_to_on_destroy(signed_out)
   end
 
@@ -68,21 +67,21 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
               message: "Couldn't find an active session for this amigo."
             }, status: :unauthorized
           end
-        rescue JWT::DecodeError => e
-          render json: {
-            status: 401,
-            message: "Failed to decode JWT: #{e.message}"
-          }, status: :unauthorized
-        rescue ActiveRecord::RecordNotFound => e
-          render json: {
-            status: 404,
-            message: "Amigo not found: #{e.message}"
-          }, status: :not_found
-        rescue => e
-          render json: {
-            status: 500,
-            message: "An unexpected error occurred: #{e.message}"
-          }, status: :internal_server_error
+          rescue JWT::DecodeError => e
+            render json: {
+              status: 401,
+              message: "Failed to decode JWT: #{e.message}"
+            }, status: :unauthorized
+          rescue ActiveRecord::RecordNotFound => e
+            render json: {
+              status: 404,
+              message: "Amigo not found: #{e.message}"
+            }, status: :not_found
+          rescue => e
+            render json: {
+              status: 500,
+              message: "An unexpected error occurred: #{e.message}"
+            }, status: :internal_server_error
         end
       end
     end

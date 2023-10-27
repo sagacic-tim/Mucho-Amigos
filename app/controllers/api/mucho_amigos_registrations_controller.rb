@@ -1,11 +1,11 @@
 require "#{Rails.root}/app/helpers/json_response_helper"
 
 class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
+  prepend_before_action :set_devise_mapping
   respond_to :json
   include JsonResponseHelper
 
   before_action :authenticate_mucho_amigo!, except: [:index, :show, :create]
-  #before_action :account_params, only: [:create, :update]
   before_action :set_devise_mapping, except: [:new, :edit, :index, :show]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -28,42 +28,33 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
 
   # POST /resource/
   def create
-    super do |resource|
-      if resource.persisted?
-        render_json_success('Registration successful, mi amigo.',
-            MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes])
-        return
-      else
-        render_json_error(resource.errors.full_messages)
-        return
-      end
-    end
-  end
+    build_resource  # This will use the sanitized params
   
-  
-
-  # PATCH /resource/:id
-  def update
-    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-    
-    if resource.update(account_params)
+    if resource.save
+      sign_up(resource_name, resource)  # Devise method to handle sign up
       render json: {
-        status: { code: 200, message: 'Updated successfully.' },
-        data: {
-          user: MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes],
-          confirmation_token: resource.confirmation_token # Provide the token
-        }
-      }
+        status: 'success',
+        message: 'Registration successful, mi amigo.',
+        data: MuchoAmigoSerializer.new(resource).serializable_hash[:data][:attributes]
+      }, status: :created
     else
-      clean_up_passwords resource
-      set_minimum_password_length
-      render json: {
-        status: { message: "This Amigo couldn't be updated successfully. #{resource.errors.full_messages.to_sentence}" }
-      }, status: :unprocessable_entity
+      render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
+    end
+  end   
+  
+  # PUT or PATCH /resource/
+  def update
+    # This retrieves the current resource
+    self.resource = send(:"current_#{resource_name}")
+  
+    # Update the resource with provided password for confirmation
+    if resource.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
+      render json: { status: 'success', message: 'Profile updated successfully.' }, status: :ok
+    else
+      render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
-
   # DELETE /mucho_amigos/:id
   def destroy
     @mucho_amigo = MuchoAmigo.find(params[:id])
@@ -113,10 +104,10 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
         render json: { locations: locations }, status: :ok
       end
       
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Party Host with MuchoAmigo id #{params[:id]} was not found" }, status: :not_found
-    rescue => e
-      render json: { error: "An unexpected error occurred: #{e.message}" }, status: :internal_server_error
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "Party Host with MuchoAmigo id #{params[:id]} was not found" }, status: :not_found
+      rescue => e
+        render json: { error: "An unexpected error occurred: #{e.message}" }, status: :internal_server_error
     end
   end
 
@@ -141,33 +132,28 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
       :party_animal,
       :personal_bio
     ])
+
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+      :full_name,
+      :user_name,
+      :email,
+      :password,
+      :password_confirmation,
+      :phone,
+      :address,
+      :street_number,
+      :street_name,
+      :street_suffix,
+      :city,
+      :state_abbreviation,
+      :country_code,
+      :postal_code,
+      :party_animal,
+      :personal_bio
+    ])
   end
 
   private
-
-  # def account_params
-  #   permitted_keys = [
-  #     :full_name,
-  #     :user_name,
-  #     :email,
-  #     :password,
-  #     :password_confirmation,
-  #     :phone,
-  #     :address,
-  #     :street_number,
-  #     :street_name,
-  #     :street_suffix,
-  #     :city,
-  #     :state_abbreviation,
-  #     :country_code,
-  #     :postal_code,
-  #     :party_animal,
-  #     :personal_bio
-  #   ]
-  
-  #   # Permit nested attributes for mucho_amigo
-  #   params.require(:mucho_amigo).permit(permitted_keys)
-  # end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?  # user is saved
@@ -188,5 +174,9 @@ class Api::MuchoAmigosRegistrationsController < Devise::RegistrationsController
       render json: { error: "You are not authorized to delete this MuchoAmigo." }, status: :forbidden
       return
     end
+  end
+
+  def set_devise_mapping
+    request.env["devise.mapping"] = Devise.mappings[:mucho_amigo]
   end
 end 

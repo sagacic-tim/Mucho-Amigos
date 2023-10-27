@@ -25,6 +25,10 @@ gem 'devise', '~> 4.9', '>= 4.9.2'
 # authentication. It follows secure by default principle.
 gem 'devise-jwt', '~> 0.11.0'
 
+# A ruby implementation of the RFC 7519 OAuth JSON Web Token
+# (JWT) standard.
+gem 'jwt', '~> 2.2', '>= 2.2.1'
+
 # A fast JSON:API serializer for Ruby Objects.
 # Declaration syntax similar to Active Model Serializer
 # Support for belongs_to, has_many and has_one

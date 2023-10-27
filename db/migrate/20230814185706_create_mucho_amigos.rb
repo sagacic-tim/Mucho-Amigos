@@ -31,7 +31,8 @@ class CreateMuchoAmigos < ActiveRecord::Migration[7.0]
       # can use this claim to identify and invalidate JWTs,
       # especially useful when implementing a blacklisting
       # strategy for tokens.
-      t.string :jti
+      t.string :jti, null: false # for JTIMatcher revocation
+      t.datetime :jwt_expiration, null: false # if you wish to manage custom expiration time
 
       ## Profile information
       t.string :phone, limit: 20

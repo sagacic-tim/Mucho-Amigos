@@ -16,16 +16,19 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   config.jwt do |jwt|
     jwt.secret = ENV['DEVISE_JWT_SECRET']
+    jwt.dispatch_requests = [['POST', %r{^/api/auth/login$}]]
+    jwt.revocation_requests = [['DELETE', %r{^/api/auth/logout$}]]
+    jwt.expiration_time = 1.day.to_i # Change this as per your needs
   end
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'DeviseController'
+  # config.parent_controller = ''
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'tmichel@sagacicweb.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

@@ -1,8 +1,21 @@
 Rails.application.routes.draw do
-  devise_for :mucho_amigos
   namespace :api, defaults: { format: 'json' } do
-
-    devise_for :mucho_amigos, path: '', path_names: {
+    devise_scope :api_mucho_amigo do
+      # Custom routes for MuchoAmigo outside of Devise's usual paths.
+      resources :mucho_amigos, controller: 'mucho_amigos_registrations', except: [:new, :edit]
+      
+      # Muchos Amigos specific routes
+      resources :mucho_amigos, except: [:new, :edit] do
+        member do
+          get 'associated_parties'
+          get 'parties_by_this_amigo_as_host'
+          get 'locations_for_host'
+        end
+      end
+    end
+  
+    # Devise routes for authentication
+    devise_for :mucho_amigos, path: 'auth', path_names: {
       sign_in: 'login',
       sign_out: 'logout',
       registration: 'signup'
@@ -10,23 +23,10 @@ Rails.application.routes.draw do
       registrations: 'mucho_amigos_registrations',
       sessions: 'mucho_amigos_sessions',
       confirmations: 'mucho_amigos_confirmations',
-      passwords: 'mucho_amigos_passwords'
     }
-
-    devise_scope :mucho_amigo do
-      resources :mucho_amigos, except: [:new, :edit],
-      controller: 'mucho_amigos_registrations',
-      defaults: { format: 'json' } do
-        member do
-          get 'associated_parties'
-          get 'parties_by_this_amigo_as_host'
-          get 'locations_for_host'
-        end
-        get '/api/mucho_amigos', to: 'api/mucho_amigos_registrations#index'
-      end
-    end
-
-    resources :mucho_parties, except: [:new, :edit], defaults: { format: 'json' } do
+  
+    # Mucho Parties routes
+    resources :mucho_parties, except: [:new, :edit] do
       member do
         get 'party_location'
         get 'party_host'
@@ -35,22 +35,27 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :mucho_guests, except: [:new, :edit], defaults: { format: 'json' } do
+    # Mucho Guests routes
+    resources :mucho_guests, except: [:new, :edit] do
       member do
         get 'party_guest_details'
-        get 'associated_parties', to: 'mucho_guests#associated_parties'
+        get 'associated_parties'
       end
     end
 
-    resources :mucho_locations, except: [:new, :edit], defaults: { format: 'json' } do
+    # Mucho Locations routes
+    resources :mucho_locations, except: [:new, :edit] do
       member do
-        get 'parties_at_this_location', to: 'mucho_locations#parties_at_this_location'
+        get 'parties_at_this_location'
       end
     end
 
+    # Countries and Regions
     resources :countries_regions, only: [:index]
     get 'country_data', to: 'countries_regions#country_data'
 
-    # get '*path', to: 'home#index', via: :all
   end
+
+  # This is a catch all route if needed.
+  # get '*path', to: 'home#index', via: :all
 end

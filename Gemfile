@@ -174,5 +174,11 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # Preview email in the default browser instead of sending it.
+  # This means you do not need to set up email delivery in your
+  # development environment, and you no longer need to worry about
+  # accidentally sending a test email to someone else's address.
+  gem 'letter_opener', '~> 1.8', '>= 1.8.1'
 end
 

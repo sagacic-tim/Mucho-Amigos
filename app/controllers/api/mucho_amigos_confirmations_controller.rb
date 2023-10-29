@@ -17,6 +17,19 @@ class Api::MuchoAmigosConfirmationsController < Devise::ConfirmationsController
     super
   end
 
+  # When the confirmatons emails isn't responded to in hte required
+  # amount of time, allow the Amigo to have the confirmaton email resent.
+  def resend
+    @mucho_amigo = MuchoAmigo.find_by_email(params[:email])
+    
+    if @mucho_amigo && !@mucho_amigo.confirmed?
+      @mucho_amigo.send_confirmation_instructions
+      render json: { message: 'Confirmation instructions have been resent to the provided email.' }, status: :ok
+    else
+      render json: { error: 'Email not found or already confirmed.' }, status: :not_found
+    end
+  end  
+
   protected
 
   # The path used after resending confirmation instructions.

@@ -2,36 +2,50 @@
 
 class Api::MuchoAmigosSessionsController < Devise::SessionsController
   # include RackSessionsFix
+  include ActionController::RespondWith
+  include Devise::Controllers::Helpers
   respond_to :json
 
   # before_action :configure_sign_in_params, only: [:create, :destroy]
 
-  # POST /resource/sign_in
   def create
-    @mucho_amigo = MuchoAmigo.find_by_email(params[:email])
-    
-    if @mucho_amigo&.valid_password?(params[:password])
-      sign_in(@mucho_amigo)
-      respond_with @mucho_amigo, location: after_sign_in_path_for(@mucho_amigo)
+    @mucho_amigo = MuchoAmigo.find_by_email(session_params[:email])
+      
+    if @mucho_amigo
+      if @mucho_amigo.valid_password?(session_params[:password])
+        sign_in(@mucho_amigo)
+        respond_with @mucho_amigo, location: after_sign_in_path_for(@mucho_amigo)
+      else
+        render json: { error: 'Invalid password' }, status: :unauthorized
+      end
     else
-      render json: { error: 'Invalid email or password' }, status: :unauthorized
+      render json: { error: 'Email not found' }, status: :not_found
     end
   end
-
-
+  
   # DELETE /resource/sign_out
   def destroy
-    respond_to_on_destroy(signed_out)
+    Rails.logger.debug "Current Mucho Amigo: #{current_mucho_amigo.inspect}"
+    begin
+      # Attempt to sign out the current user
+      if current_mucho_amigo
+        sign_out(current_mucho_amigo)
+        render json: { message: 'Logged out successfully.' }, status: :ok
+      else
+        render json: { error: 'No current user to log out.' }, status: :unauthorized
+      end
+    rescue => e
+      # Generic error handling for unexpected issues
+      render json: { error: "An error occurred: #{e.message}" }, status: :internal_server_error
+    end
   end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+  
 
   private
+
+  def session_params
+    params.require(:mucho_amigo).permit(:email, :password)
+  end
   
   def respond_with(resource, _opts = {})
     respond_to do |format|

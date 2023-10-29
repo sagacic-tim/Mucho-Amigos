@@ -1,4 +1,10 @@
+require "application_responder"
+include ActionController::MimeResponds
+
 class ApplicationController < ActionController::API
+  self.responder = ApplicationResponder
+  respond_to :html
+
   # Run this before action only for Devise controllers
   before_action :configure_permitted_parameters, if: :devise_controller?
   

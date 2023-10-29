@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     devise_scope :api_mucho_amigo do
       # Custom routes for MuchoAmigo outside of Devise's usual paths.
       resources :mucho_amigos, controller: 'mucho_amigos_registrations', except: [:new, :edit]
+      post 'auth/resend_confirmation', to: 'mucho_amigos_confirmations#resend'
       
       # Muchos Amigos specific routes
       resources :mucho_amigos, except: [:new, :edit] do
@@ -15,15 +16,17 @@ Rails.application.routes.draw do
     end
   
     # Devise routes for authentication
-    devise_for :mucho_amigos, path: 'auth', path_names: {
-      sign_in: 'login',
-      sign_out: 'logout',
-      registration: 'signup'
-    }, controllers: {
-      registrations: 'mucho_amigos_registrations',
-      sessions: 'mucho_amigos_sessions',
-      confirmations: 'mucho_amigos_confirmations',
-    }
+    devise_for :mucho_amigos, path: 'auth',
+      path_names: {
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'signup'
+      },
+      controllers: {
+        registrations: 'api/mucho_amigos_registrations',
+        sessions: 'api/mucho_amigos_sessions',
+        confirmations: 'api/mucho_amigos_confirmations'
+      }
   
     # Mucho Parties routes
     resources :mucho_parties, except: [:new, :edit] do

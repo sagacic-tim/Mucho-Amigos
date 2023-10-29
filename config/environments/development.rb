@@ -62,21 +62,10 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  # default url options — In production, :host should be set
-  # to the actual host of your application.
-  config.action_mailer.perform_deliveries = true
   # define default url options for the Devise mailer in our
   # environment file
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
-  # segt up hte smtp server information.
-  config.action_mailer.smtp_settings = {
-    address: 'mail.sagacicweb.com',
-    port: 587,
-    domain: 'sagacicweb.com',
-    user_name: 'tmichel@sagacicweb.com',
-    password: 'jki8&^8(65GtBHgG5$3Sd',
-    authentication: 'plain',
-    enable_starttls_auto: true
-  }
+
 end

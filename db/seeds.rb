@@ -30,7 +30,9 @@ mucho_amigo_1 = MuchoAmigo.create!(
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  # provide an expiration date 30 days from now
+  jwt_expiration: Time.now + 30.days
 )
 mucho_amigo_2 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
@@ -51,7 +53,9 @@ mucho_amigo_2 = MuchoAmigo.create!(
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  # provide an expiration date 30 days from now
+  jwt_expiration: Time.now + 30.days
 )
 mucho_amigo_3 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
@@ -72,7 +76,9 @@ mucho_amigo_3 = MuchoAmigo.create!(
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  # provide an expiration date 30 days from now
+  jwt_expiration: Time.now + 30.days
 )
 mucho_amigo_4 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
@@ -93,7 +99,9 @@ mucho_amigo_4 = MuchoAmigo.create!(
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  # provide an expiration date 30 days from now
+  jwt_expiration: Time.now + 30.days
 )
 mucho_amigo_5 = MuchoAmigo.create!(
   full_name: Faker::Name.unique.name,
@@ -114,7 +122,9 @@ mucho_amigo_5 = MuchoAmigo.create!(
   phone: Faker::PhoneNumber.unique.cell_phone,
   party_animal: Faker::Boolean.boolean(true_ratio: 0.65),
   personal_bio: Faker::Lorem.unique.paragraphs(number:3, supplemental: true),
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  # provide an expiration date 30 days from now
+  jwt_expiration: Time.now + 30.days
 )
 
 location_1 = MuchoLocation.create!(

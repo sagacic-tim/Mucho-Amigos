@@ -2,18 +2,17 @@ require 'bigdecimal'
 require "email_validator"
 require "phonelib"
 
-# Each MuchoAmigo can attend many parties, through the MuchoGuest join table
   
 class MuchoAmigo < ApplicationRecord
   # JWT Revocation strategy
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable, :trackable, :omniauthable
-  # Also includes the JWT modules
-  devise  :database_authenticatable, :registerable, :confirmable,
-          :recoverable, :rememberable, :validatable, :jwt_authenticatable,
-          jwt_revocation_strategy:  JwtDenylist #, :omniauthable,
-          # omniauth_providers: [:google_oauth2, :facebook, :github, :linkedin]
+
+  devise :database_authenticatable, :registerable, :confirmable,
+    :recoverable, :rememberable, :validatable, :jwt_authenticatable,
+    :lockable, :timeoutable, :trackable,
+    jwt_revocation_strategy: JwtDenylist
+            # :omniauthable,
+  #         $ omniauth_providers: [:google_oauth2, :facebook, :github, :linkedin]
 
   # OmniAuth authentication via Google, Facebook, Github
   # and LinkedIn (provider)

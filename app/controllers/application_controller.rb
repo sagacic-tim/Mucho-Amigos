@@ -1,26 +1,26 @@
 require "application_responder"
-include ActionController::MimeResponds
-
 class ApplicationController < ActionController::API
-  self.responder = ApplicationResponder
-  respond_to :html
+  # Modules inclusion
+  include ActionController::MimeResponds
+  include Devise::Controllers::Helpers
 
-  # Run this before action only for Devise controllers
-  before_action :configure_permitted_parameters, if: :devise_controller?
-  
-  def info
-    render json: {
-      message: "Welcome to the Mucho Amigos API! This is the app that allows us to create parties anywhere and everywhere, and to be able to invite anyone we wish.",
-      version: "1.0",  # Include API version or any other relevant information
-      status: "ok"
-    }, status: :ok
-  end
-
+  # Responder setup
   self.responder = ApplicationResponder
   respond_to :json
 
-  # Rescue from parse errors
+  # Before actions
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  # Handle parameter parse errors
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :handle_parse_error
+
+  def info
+    render json: {
+      message: "Welcome to the Mucho Amigos API! This is the app that allows us to create parties anywhere and everywhere, and to be able to invite anyone we wish.",
+      version: "1.0",
+      status: "ok"
+    }, status: :ok
+  end
 
   protected
 

@@ -15,13 +15,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_004829) do
   enable_extension "plpgsql"
 
   create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "jwt_revocations", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti", unique: true
   end
 
   create_table "mucho_amigos", force: :cascade do |t|
@@ -29,17 +27,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_004829) do
     t.string "user_name", limit: 64
     t.string "email", limit: 255
     t.string "encrypted_password", default: "", null: false
-    t.string "confirmation_token", limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email", limit: 255
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
     t.string "jti", null: false
+    t.datetime "jwt_expiration", null: false
     t.string "phone", limit: 20
     t.string "address", limit: 255
     t.string "street_number", limit: 16
@@ -60,6 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_004829) do
     t.index ["jti"], name: "index_mucho_amigos_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_mucho_amigos_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_mucho_amigos_on_unlock_token", unique: true
+    t.index ["user_name"], name: "index_mucho_amigos_on_user_name", unique: true
   end
 
   create_table "mucho_guests", force: :cascade do |t|

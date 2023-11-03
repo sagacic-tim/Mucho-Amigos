@@ -15,6 +15,7 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
       if @mucho_amigo.valid_password?(session_params[:password])
         sign_in(@mucho_amigo)
         respond_with @mucho_amigo, location: after_sign_in_path_for(@mucho_amigo)
+        Rails.logger.debug "Current Mucho Amigo: #{current_mucho_amigo.inspect}"
       else
         render json: { error: 'Invalid password' }, status: :unauthorized
       end
@@ -26,21 +27,16 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     Rails.logger.debug "Current Mucho Amigo: #{current_mucho_amigo.inspect}"
-    begin
-      # Attempt to sign out the current user
+    def destroy
       if current_mucho_amigo
-        sign_out(current_mucho_amigo)
-        render json: { message: 'Logged out successfully.' }, status: :ok
+        sign_out(:mucho_amigo)
+        respond_to_on_destroy
       else
         render json: { error: 'No current user to log out.' }, status: :unauthorized
       end
-    rescue => e
-      # Generic error handling for unexpected issues
-      render json: { error: "An error occurred: #{e.message}" }, status: :internal_server_error
     end
   end
   
-
   private
 
   def session_params
@@ -61,15 +57,41 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
 
   def respond_to_on_destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-  
+    
     respond_to do |format|
       format.html { redirect_to after_sign_out_path_for(resource_name) }
       format.json do
+        error = nil
+  
         begin
           jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last,
-          Rails.application.credentials.devise_jwt_secret_key!).first
+            Rails.application.credentials.devise_jwt_secret_key!).first
           current_amigo = MuchoAmigo.find(jwt_payload['sub'])
+          rescue JWT::DecodeError => e
+            error = e
+          rescue ActiveRecord::RecordNotFound => e
+            error = e
+          rescue => e
+            error = e
+        end
   
+        case error
+          when JWT::DecodeError
+            render json: {
+              status: 401,
+              message: "Failed to decode JWT: #{error.message}"
+            }, status: :unauthorized
+          when ActiveRecord::RecordNotFound
+            render json: {
+              status: 404,
+              message: "Amigo not found: #{error.message}"
+            }, status: :not_found
+          when StandardError # A general exception case
+            render json: {
+              status: 500,
+              message: "An unexpected error occurred: #{error.message}"
+            }, status: :internal_server_error
+        else
           if signed_out
             render json: {
               status: 200,
@@ -81,23 +103,8 @@ class Api::MuchoAmigosSessionsController < Devise::SessionsController
               message: "Couldn't find an active session for this amigo."
             }, status: :unauthorized
           end
-          rescue JWT::DecodeError => e
-            render json: {
-              status: 401,
-              message: "Failed to decode JWT: #{e.message}"
-            }, status: :unauthorized
-          rescue ActiveRecord::RecordNotFound => e
-            render json: {
-              status: 404,
-              message: "Amigo not found: #{e.message}"
-            }, status: :not_found
-          rescue => e
-            render json: {
-              status: 500,
-              message: "An unexpected error occurred: #{e.message}"
-            }, status: :internal_server_error
         end
       end
     end
-  end  
+  end   
 end
